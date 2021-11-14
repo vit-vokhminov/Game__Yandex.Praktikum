@@ -1,0 +1,22 @@
+.instruction {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 24px;
+}
+
+.instruction__img {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 75px;
+	height: 60px;
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+}
+
+.instruction__text {
+	margin-left: 37px;
+	font-size: var(--font-size-xs);
+}
