@@ -25,6 +25,8 @@
 - Express
 - PostgreSQL
 - OAuth-авторизация
+- ESLint / Prettier
+- Docker
 
 ## Страницы
 
