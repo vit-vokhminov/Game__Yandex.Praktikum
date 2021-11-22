@@ -10,6 +10,22 @@
 
 [Игра](https://charleston-runner-07.ya-praktikum.tech)
 
+## Стек
+
+- React.js
+- Redux-saga
+- Yup
+- Webpack 5
+- TypeScript
+- Babel
+- Canvas API
+- SSR
+- Jest и Enzyme
+- Node.js
+- Express
+- PostgreSQL
+- OAuth-авторизация
+
 ## Страницы
 
 - Аторизация
