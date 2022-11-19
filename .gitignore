@@ -1,0 +1,10 @@
+node_modules
+dist
+.idea/
+coverage
+
+/build
+.vscode
+/storybook-static
+.loki/report.html
+.loki/report.json
