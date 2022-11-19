@@ -1,0 +1,14 @@
+// Стандартный errorMessage
+.error {
+    min-height: 20px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: right;
+    color: var(--errorMessage);
+    position: relative;
+    top: -19px;
+    margin-bottom: -20px;
+}
+

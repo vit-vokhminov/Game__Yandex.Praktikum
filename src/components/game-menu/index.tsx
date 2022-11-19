@@ -1,42 +1,41 @@
-import React, { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import './game-menu.css';
+import React from 'react';
+import { useNavigate } from "react-router-dom";
+import { Button } from 'components/UI/Button';
+import s from './gameMenu.module.css';
 
 type Props = {
 	goOptions: () => void;
 };
 
 const GameMenu = ({ goOptions }: Props) => {
-	const history = useHistory();
-	const handleOnClick = useCallback(
-		(link) => history.push(`/${link}`),
-		[history],
-	);
+
+	const navigate = useNavigate();
+
+	const handleOnClick = (link: string) => navigate(link);
 
 	return (
-		<div className="game-menu">
-			<button
+		<div className={s.game_menu}>
+			<Button
 				type="button"
-				className="btn fullwidth"
+				fullwidth
 				onClick={() => goOptions()}
 			>
 				Выбрать персонажа
-			</button>
-			<div className="game-menu__block">
-				<button
+			</Button>
+			<div className={s.game_menu__block}>
+				<Button
 					type="button"
-					className="btn mr"
+					className={s.mr}
 					onClick={() => handleOnClick('forum')}
 				>
 					Форум
-				</button>
-				<button
+				</Button>
+				<Button
 					type="button"
-					className="btn"
 					onClick={() => handleOnClick('leaderboard')}
 				>
 					Лидеры
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

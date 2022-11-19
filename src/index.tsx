@@ -1,21 +1,17 @@
-//import 'regenerator-runtime/runtime';
-//import React from 'react';
-//import ReactDOM from 'react-dom';
-//import { BrowserRouter } from 'react-router-dom';
-//import { Provider } from 'react-redux';
-//import { create } from './store';
-//import App from './App';
+import React from 'react';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import App from './App';
 
-//const initialState = (window as any).__INITIAL_STATE__ || {};
+import { store } from './redux/store';
 
-//const store = create(initialState);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
-//const rootElement = document.getElementById('root');
-//ReactDOM.hydrate(
-//    <BrowserRouter>
-//        <Provider store={store}>
-//            <App />
-//        </Provider>
-//    </BrowserRouter>,
-//    rootElement,
-//);
+root.render(
+    <BrowserRouter>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </BrowserRouter>
+);

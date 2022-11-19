@@ -1,0 +1,60 @@
+npm run build:prod
+npm run build:dev
+
+
+npm init -y
+npm i -D webpack webpack-cli
+npm i -D html-webpack-plugin
+npm i -D typescript ts-loader
+npm i -D ts-node @types/node @types/webpack
+npm i -D webpack-dev-server @types/webpack-dev-server
+npm i -D @types/react @types/react-dom
+npm i -D sass-loader sass style-loader css-loader
+npm i -D mini-css-extract-plugin
+npm i -D @types/react-router-dom
+npm i -D @svgr/webpack
+npm i -D file-loader
+npm i -D babel-loader @babel/core
+npm i -D @babel/preset-env
+npm i -D stylelint stylelint-config-standard-scss
+npm i -D @babel/preset-typescript
+npm i -D webpack-bundle-analyzer
+npm i -D @types/webpack-bundle-analyzer
+npm i -D @babel/preset-react
+npm i -D identity-obj-proxy
+npm i -D react-history
+npm i -D prettier
+npm i -D dotenv-webpack
+
+npm i react react-dom
+npm i react-router-dom
+npm i react-redux redux-saga
+npm i classnames
+npm i axios
+npm i formik
+npm i dotenv
+npm i yup
+
+
+npm i bcryptjs
+npm i cookie-parser
+npm i cors
+npm i express
+npm i express-validator
+npm i jsonwebtoken
+npm i pg
+npm i pg-hstore
+npm i sequelize
+npm i socket.io
+npm i socket.io-client
+npm i uuid
+npm i nodemailer
+npm i -D nodemon
+
+
+///!!!!!!!
+npm i -D @babel/preset-react@7.16.7
+npm i -D identity-obj-proxy@3.0.0
+
+// посмотреть анализ бандла http://127.0.0.1:8888/
+// запускать просто npm start или npm run build:dev

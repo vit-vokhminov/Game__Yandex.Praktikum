@@ -1,79 +1,50 @@
-.table-loaderboard {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    max-height: 500px;
-    overflow: auto;
-    width: 100%;
+.table_loaderboard {
+    padding: 5px 0px 40px;
 }
 
-.table-loaderboard::-webkit-scrollbar {
-    width: 0.5em;
-}
-
-.table-loaderboard::-webkit-scrollbar-track {
-    margin-bottom: 20px;
-}
-
-.table-loaderboard::-webkit-scrollbar-thumb {
-    background-color: #ffffffa8;
-}
-
-.table-leaderboard-item {
-    display: grid;
-    grid-template-columns: auto 1fr 1.5fr 1.5fr;
-    margin: 15px 20px;
-    align-items: center;
-    grid-column-gap: 10px;
-}
-
-.leaderboard-item-topics-count {
+.table_leaderboard_item {
+    padding: 2px 20px;
+    border-bottom: 1px solid #ccc;
     display: flex;
-    border-radius: 10px;
-    border: 1px solid #000;
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: space-between;
+    align-content: stretch;
     align-items: center;
-    justify-items: center;
-    margin-right: 20px;
-    padding: 10px;
+    text-align: center;
 }
 
-.leaderboard-item-answers {
-    display: flex;
-    border-radius: 10px;
-    border: 1px solid #000;
-    align-items: center;
-    justify-items: center;
-    padding: 10px;
+.table_leaderboard_item:last-of-type {
+    border-bottom: none;
 }
 
-.item-img {
-    height: 53px;
+.item_number {
+    width: 30px;
+    padding: 0 10px;
 }
 
-.item-img2 {
-    height: 53px;
-    /*background: url('../../assets/img/Angels2.png') no-repeat;*/
-    background-size: contain;
+.item_avatar {
+    width: 50px;
+    object-fit: contain;
+    padding: 0 10px 0 20px;
 }
-
-.item-img3 {
-    height: 53px;
-    /*background: url('../../assets/img/Angels3.png') no-repeat;*/
-    background-size: contain;
+.item_name {
+    padding: 0 10px;
+    flex: 1 1 auto;
+    align-self: auto;
+    width: 184px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-.leaderboard-item-topics-icon {
-    cursor: pointer;
+.item_level {
+    padding: 0 10px;
+    min-width: 186px;
+    flex: 1 1 auto;
+    align-self: auto;
 }
-
-.leaderboard-item-topics {
-    display: flex;
-    border-radius: 10px;
-    align-items: center;
-    padding: 10px;
-    background: #fff;
-}
-
-.empty__list {
-    margin: 30px auto;
+.item_count {
+    padding: 0 10px;
+    width: 50px;
+    font-weight: bold;
 }

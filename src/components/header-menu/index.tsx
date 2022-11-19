@@ -1,25 +1,23 @@
 import React from 'react';
-import HeaderMenuItem from '../header-menu-item';
-import type { HeaderMenuProps } from './types';
-import LogoutButton from '../logout-button';
-import './header-menu.css';
+import { Link, useLocation } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
+import SettingsIcon from 'assets/svg/settings.svg';
+import s from './headerMenu.module.css';
 
-const HeaderMenu = ({ headerMenu }: HeaderMenuProps) => {
+const HeaderMenu = () => {
+    const location = useLocation();
+
     return (
-        <div className="header-menu">
-            <div>
-                {
-                    headerMenu.map((item) => (
-                        <HeaderMenuItem
-                            key={item.id}
-                            imgLink={item.imgLink}
-                            imgAlt={item.imgAlt}
-                            link={item.link}
-                        />
-                    ))
-                }
+        <div className={s.header_menu}>
+            <div className={s.header_btn}>
+                {location.pathname != '/profile' && (
+                    <Link to={'/profile'}>
+                        <SettingsIcon className={s.header_menu__img} />
+                    </Link>
+                )}
             </div>
-            <div>
+
+            <div className={s.header_btn}>
                 <LogoutButton />
             </div>
         </div>

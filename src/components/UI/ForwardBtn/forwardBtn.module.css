@@ -1,0 +1,16 @@
+.btn_back_icon {
+    transform: rotate(180deg);
+    background: #fff;
+    padding: 10px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    cursor: pointer;
+}
+
+.btn_back_icon:hover {
+    filter: brightness(0.95);
+}
+
+.btn_back_icon:active {
+    filter: brightness(0.9);
+}

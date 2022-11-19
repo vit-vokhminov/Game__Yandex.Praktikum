@@ -1,279 +1,503 @@
-/* eslint-disable camelcase */
-//eslint-disable-line
 import {
+    // фоновые картинки
+    // level1
+    img_11_sky,
+    img_12_clouds,
+    img_13_pyramid,
+    img_14_bg_ground01,
+    img_15_bg_ground02,
+    img_16_bg_ground03,
+    img_17_ground,
+
+    // level2
+    img_21_sky,
+    img_23_clouds,
+    img_22_mountains,
+    img_24_bg_ground01,
+    img_25_bg_ground02,
+    img_26_ground,
+    
+    // levels3
+    img_31_wall,
+    img_32_prop01,
+    img_33_prop02,
+    img_34_stones,
+    img_35_crystals,
+    img_36_ground,
+
+    // levels4
+    img_41_sky,
+    img_42_stars,
+    img_44_clouds02,
+    img_45_mountains,
+    img_46_ground01,
+    img_47_ground02,
+    img_48_ground,
+
+    // главный герой
     HeroRun,
     HeroJump,
     HeroStand,
-    HeroDeath2,
+    HeroDeath,
 
-    Pussy_attack_all2,
+    // враги
     Pussy_level1,
+    Pussy_level1_Attack,
+    Pussy_level1_Stop,
+
     Pussy_level2,
+    Pussy_level2_Attack,
+    Pussy_level2_Stop,
+
     Pussy_level3,
+    Pussy_level3_Attack,
+    Pussy_level3_Stop,
+
     Pussy_level4,
+    Pussy_level4_Attack,
+    Pussy_level4_Stop,
+
     // аудио файлы
-    Jump,
-    Death,
-    theme1,
-    theme2,
-    theme3,
-    theme4,
+    Sound_Jump,
+    Sound_Death,
+    OST_level_1,
+    OST_level_2,
+    OST_level_3,
+    OST_level_4,
 } from './assetsLinks';
-
-import { displayText, randomRange } from './utils';
-import { loadSpriteImage } from './loadImages';
+import {
+    Game,
+    Background,
+    Hero
+} from './types';
+import { loadStaticImage, loadSpriteImage } from './loadImages';
 import loadAudio from './loadAudio';
-import { Hero as Heero } from './hero';
-import { Enemy } from './enemy';
-import { Level } from './level';
-import configGame from './configGame';
-// import drawRunner from './drawRunner';
 
+import Angel1 from 'assets/img/Angels1.png';
+import Angel2 from 'assets/img/Angels2.png';
+import Angel3 from 'assets/img/Angels3.png';
+import Angel4 from 'assets/img/Angels4.png';
+import Level1 from 'assets/img/level1.jpg';
+import Level2 from 'assets/img/level2.jpg';
+import Level3 from 'assets/img/level3.jpg';
+import Level4 from 'assets/img/level4.jpg';
+
+export const ANGELS: any = {
+    hero1: {
+        name: "Джуниор",
+        avatar: Angel1
+    },
+    hero2: {
+        name: "Мидл",
+        avatar: Angel2
+    },
+    hero3: {
+        name: "Cеньор",
+        avatar: Angel3
+    },
+    hero4: {
+        name: "Тимлид",
+        avatar: Angel4
+    },
+}
+
+export const LEVELS: any = {
+    level1: {
+        name: "Долина ветра",
+        avatar: Level1
+    },
+    level2: {
+        name: "Тихий лес",
+        avatar: Level2
+    },
+    level3: {
+        name: "Чернильные топи",
+        avatar: Level3
+    },
+    level4: {
+        name: "Блуждающие огни",
+        avatar: Level4
+    },
+}
+
+const clientHeight = window.innerHeight;
+const clientWidth = window.innerWidth;
+
+const spriteHeight = 150;
 // соотношение разрешения дисплея текущего устройства
 export const pixelDevice: number = (window.devicePixelRatio > 1) ? 2 : 1;
+
 // стартовая скорость игры
 const startSpeed: number = 8 / pixelDevice;
 
 // настройки игры и canvas
-
-type SkinsEnemyType = {
-    level1: number;
-    level2: number;
-    level3: number;
-    level4: number;
-}
-
-const skinsEnemy: SkinsEnemyType = {
-    level1: 0,
-    level2: 1,
-    level3: 2,
-    level4: 3,
+export const GAME: Game = {
+    ctx: null,
+    user: null,
+    winWidth: clientWidth,
+    winHeight: clientHeight,
+    // координа на которой расположены персонажы
+    y_positionLine: clientHeight - 220 - spriteHeight,
+    // наименование Героя
+    heroName: 'hero1',
+    // наименование уровня
+    level: 'level1',
+    // сколько всего картинок
+    allCount: 42,
+    // сколько загрузилось
+    loadCount: 0,
+    // выравнивание картинок исходя из пропорций экрана
+    yPosBg: clientHeight <= 1080 ? clientHeight - 1080 : 1080 - clientHeight,
+    xPosBg: clientWidth <= 1920 ? clientWidth - 1920 : 1920 - clientWidth,
+    // скорость игры
+    speed: startSpeed,
+    // балансная переменная для увеличения скорости игры
+    scoreCounter: 0,
+    // счёт в игре
+    score: 0,
+    // цвет счёта в игре
+    scoreColor: '#000000',
+    // игра остановлена
+    isGameStopped: false,
+    // рекодр набирающий значения в процессе игры
+    localRecord: 0,
+    // разрешает воспроизведение аудио файлов
+    audioPlayed: true,
+    // html элементы dom
+    dom: {},
+    // получить рандомное значение из двух аргументов
+    random: range => {
+        const min = range[0];
+        const max = range[1];
+        const rand = min + Math.random() * (max + 1 - min);
+        return Math.floor(rand);
+    },
+    // используется для остановки requestAnimationFrame
+    requestId: 0,
+    setLeaderboard: () => null,
 };
 
+// фоновые картинки
+const level1: Background[] = [
+    {
+        path: loadStaticImage(img_11_sky, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_12_clouds, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_13_pyramid, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_14_bg_ground01, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 40,
+    },
+    {
+        path: loadStaticImage(img_15_bg_ground02, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 20,
+    },
+    {
+        path: loadStaticImage(img_16_bg_ground03, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 10,
+    },
+    {
+        path: loadStaticImage(img_17_ground, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 1,
+    },
+];
 
-export class GAME2 {
-    score: number;
+const level2: Background[] = [
+    {
+        path: loadStaticImage(img_21_sky, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_23_clouds, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 50,
+    },
+    {
+        path: loadStaticImage(img_22_mountains, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_24_bg_ground01, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 40,
+    },
+    {
+        path: loadStaticImage(img_25_bg_ground02, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 20,
+    },
+    {
+        path: loadStaticImage(img_26_ground, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 1,
+    },
+];
 
-    hero: Heero;
+const level3: Background[] = [
+    {
+        path: loadStaticImage(img_31_wall, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_32_prop01, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_33_prop02, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 40,
+    },
+    {
+        path: loadStaticImage(img_34_stones, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 20,
+    },
+    {
+        path: loadStaticImage(img_35_crystals, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 10,
+    },
+    {
+        path: loadStaticImage(img_36_ground, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 1,
+    },
+];
 
-    gravity: number;
+const level4: Background[] = [
+    {
+        path: loadStaticImage(img_41_sky, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_42_stars, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_44_clouds02, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 70,
+    },
+    {
+        path: loadStaticImage(img_45_mountains, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 0,
+    },
+    {
+        path: loadStaticImage(img_46_ground01, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 20,
+    },
+    {
+        path: loadStaticImage(img_47_ground02, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 10,
+    },
+    {
+        path: loadStaticImage(img_48_ground, GAME),
+        x: GAME.xPosBg,
+        x2: clientWidth,
+        speed: 1,
+    },
+];
 
-    canvas: HTMLCanvasElement;
+export const BG: any = { level1, level2, level3, level4 };
 
-    ctx: CanvasRenderingContext2D | null;
+export const HERO: Hero = {
+    img: {
+        run: loadSpriteImage(HeroRun, 200, 200, 12, 1, GAME),
+        jump: loadSpriteImage(HeroJump, 200, 200, 6, 1, GAME),
+        hurt: loadSpriteImage(HeroDeath, 200, 200, 1, 1, GAME),
+        stand: loadSpriteImage(HeroStand, 200, 200, 18, 1, GAME),
+    },
+    position: {
+        x: 65,
+        y: GAME.y_positionLine,
+    },
+    event: {
+        run: false,
+        jump: false,
+    },
+    offset: 0,
+};
 
-    constructor(canvas: HTMLCanvasElement, pause) {
-        this.canvas = canvas;
-        this.ctx = null;
-        this.dom = undefined;
-        this.audioPlayed = true;
-        this.score = 0;
-        this.step = 0.0005;
-        this.localRecord = 0;
-        this.localStorageRecord = 0;
-        this.gravity = configGame.gravity;
-        this.pause = pause;
-        this.speed = configGame.speedGame;
-        this.isGameStopped = configGame.isGameStopped;
-        this.isGameStatic = configGame.isGameStatic;
-        this.hero = undefined;
-        this.enemiesList = [];
-        this.skinEnemies = [];
-        this.level = undefined;
-        this.initialSpawnTimer = 200;
-        this.spawnTimer = this.initialSpawnTimer;
-        this.countSprites = 4;
-        this.countLoadedSprites = 0;
-        this.setLeaderboard = () => null;
-    }
+// пиздюки
+const pussyDistance = [[640, 1250], [1400, 2010], [2160, 2920]];
 
-    Start(): void {
-        this.ctx = this.canvas.getContext('2d');
-        this.level = new Level(0, 0, this.speed, this.canvas, this.ctx, this.loadingSprite);
-        this.hero = new Heero(this.canvas, this.ctx, this.gravity, this.speed);
-        this.Preloader();
-        this.level.init();
-        this.EventListener();
-        this.Update();
-        if (localStorage.getItem('localStorageRecord')) {
-            this.localStorageRecord = Number(localStorage.getItem('localStorageRecord')) || 0;
-        }
-    }
-
-    Update() {
-        this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        if (configGame.isPause) {
-            configGame.speedGame = 0;
-            this.level.pause = true;
-            this.hero.isStaticHero();
-        } else {
-            this.hero.actions.stand = false;
-            this.level.pause = false;
-        }
-        this.level.update();
-        this.score += configGame.speedGame / 100;
-        if (this.score > this.localRecord) {
-            this.localRecord = Math.floor(this.score);
-        }
-
-        this.spawnTimer--;
-        if (!configGame.isPause) {
-            if (this.spawnTimer <= 0) {
-                this.createEnemies(this.skinEnemies[skinsEnemy[configGame.level]]);
-                this.spawnTimer = this.initialSpawnTimer - this.speed * 8;
-
-                if (this.spawnTimer < 60) {
-                    this.spawnTimer = 60;
-                }
-            }
-        }
-
-        for (let i = 0; i < this.enemiesList.length; i++) {
-            let enemy = this.enemiesList[i];
-            if (enemy.x + enemy.w < 0) {
-                this.enemiesList.splice(i, 1);
-            }
-            if (
-                this.hero.x < enemy.x + enemy.w - 80 &&
-                this.hero.x + this.hero.w - 80 > enemy.x &&
-                this.hero.y < enemy.y + enemy.h &&
-                this.hero.y + this.hero.h > enemy.y + 35
-            ) {
-                this.hero.actions.run = false;
-                this.hero.deathHero();
-
-                enemy.actions.run = false;
-                enemy.actions.attack = true;
-
-                this.gameStopp();
-            }
-            //enemy.speed += this.step;
-            enemy.Move();
-        }
-
-        if (!this.hero.actions.hurt) {
-            this.hero.Move();
-        }
-
-        this.hero.speed += this.step;
-        this.level.speed += this.step;
-        this.speed += this.step;
-        configGame.speedGame = this.speed;
-
-        if (!configGame.isPause) {
-            displayText(this.ctx, this.score, this.localStorageRecord);
-        }
-
-        if (!this.isGameStopped) {
-            requestAnimationFrame(() => this.Update());
-        }
-    }
-
-    EventListener(): void {
-        const handlerKeypressDown = (event: { keyCode: number; }) => {
-            if (event.keyCode === 32) {
-                this.hero.actions.jump = !configGame.isPause && true;
-                this.hero.actions.run = false;
-            }
-        };
-        const handlerKeypressUp = (event: { keyCode: number; }) => {
-            if (event.keyCode === 32) {
-                this.hero.actions.jump = false;
-            }
-        };
-        const handlerMouseDown = () => {
-            this.hero.actions.jump = !configGame.isPause && true;
-            this.hero.actions.run = false;
-        };
-        const handlerMouseUp = () => {
-            this.hero.actions.jump = false;
-        };
-        document.addEventListener('mousedown', handlerMouseDown);
-        document.addEventListener('mouseup', handlerMouseUp);
-        document.addEventListener('keydown', handlerKeypressDown);
-        document.addEventListener('keyup', handlerKeypressUp);
-    }
-
-    Preloader() {
-        this.hero.skins.stand = loadSpriteImage(HeroStand, 200, 200, 18, 1);
-        this.hero.skins.run = loadSpriteImage(HeroRun, 200, 200, 12, 1);
-        this.hero.skins.jump = loadSpriteImage(HeroJump, 200, 200, 12, 1);
-        this.hero.skins.hurt = loadSpriteImage(HeroDeath2, 200, 200, 1, 1);
-        this.skinEnemies[0] = loadSpriteImage(Pussy_level1, 200, 200, 18, 1);
-        this.skinEnemies[1] = loadSpriteImage(Pussy_level2, 200, 200, 12, 1);
-        this.skinEnemies[2] = loadSpriteImage(Pussy_level3, 200, 200, 12, 1);
-        this.skinEnemies[3] = loadSpriteImage(Pussy_level4, 200, 200, 12, 1);
-        this.skinEnemies[4] = loadSpriteImage(Pussy_attack_all2, 200, 200, 1, 1);
-
-        this.level.preloader();
-    }
-
-    loadedSprite() {
-        this.countLoadedSprites += 1;
-    }
-
-    restart() {
-        this.dom.gameBanner.current?.classList.add('hidden');
-        this.enemiesList = [];
-        this.score = 0;
-        this.spawnTimer = this.initialSpawnTimer;
-        this.speed = configGame.defaultSpeed;
-        this.isGameStopped = false;
-        this.Start();
-    }
-
-    gameStopp() {
-        this.speed = 0;
-        this.isGameStopped = true;
-        this.enemiesList = [];
-        this.hero.actions.run = false;
-        this.dom.gameBanner.current?.classList.remove('hidden');
-        document.exitPointerLock();
-        // остановить аудио
-        if (this.audioPlayed) {
-            this.audioPlayed = false;
-            AUDIO.Dead.play();
-        }
-        AUDIO.Theme1.stop();
-        this.setLeaderboard(Math.floor(this.score));
-        // запись нового рекорда
-        if (this.localRecord > this.localStorageRecord) {
-            const record = Math.floor(this.score);
-            localStorage.setItem('localStorageRecord', String(record));
-            this.localStorageRecord = record;
-        }
-    }
-
-    createEnemies(skin) {
-        let size = randomRange(250, 450);
-        let typeSkin = randomRange(0, 2);
-        const skinEnemy = Object.assign({}, skin, { attack: this.skinEnemies[4] });
-        let obstacle = new Enemy(
-            this.canvas.width + size,
-            this.canvas.height - 200 * 1.5,
-            this.speed, this.canvas, this.ctx, skinEnemy, typeSkin);
-        this.enemiesList.push(obstacle);
-    }
-}
+export const PUSSY: any = {
+    level1: {
+        run: loadSpriteImage(Pussy_level1, 200, 200, 18, 4, GAME),
+        attack: loadSpriteImage(Pussy_level1_Attack, 200, 200, 1, 1, GAME),
+        stop: loadSpriteImage(Pussy_level1_Stop, 200, 200, 1, 1, GAME),
+    },
+    level2: {
+        run: loadSpriteImage(Pussy_level2, 200, 200, 12, 4, GAME),
+        attack: loadSpriteImage(Pussy_level2_Attack, 200, 200, 1, 1, GAME),
+        stop: loadSpriteImage(Pussy_level2_Stop, 200, 200, 1, 1, GAME),
+    },
+    level3: {
+        run: loadSpriteImage(Pussy_level3, 200, 200, 12, 4, GAME),
+        attack: loadSpriteImage(Pussy_level3_Attack, 200, 200, 1, 1, GAME),
+        stop: loadSpriteImage(Pussy_level3_Stop, 200, 200, 1, 1, GAME),
+    },
+    level4: {
+        run: loadSpriteImage(Pussy_level4, 200, 200, 12, 4, GAME),
+        attack: loadSpriteImage(Pussy_level4_Attack, 200, 200, 1, 1, GAME),
+        stop: loadSpriteImage(Pussy_level4_Stop, 200, 200, 1, 1, GAME),
+    },
+    skin: [0, 200, 400],
+    enemy: [
+        {
+            x: 1280 + GAME.random(pussyDistance[0]),
+            y: GAME.y_positionLine,
+            offset: 0,
+            distance: 1.5,
+            attack: false,
+        },
+        {
+            x: 1280 + GAME.random(pussyDistance[1]),
+            y: GAME.y_positionLine,
+            offset: 200,
+            distance: 1.5,
+            attack: false,
+        },
+        {
+            x: 1280 + GAME.random(pussyDistance[2]),
+            y: GAME.y_positionLine,
+            offset: 400,
+            distance: 1.5,
+            attack: false,
+        },
+    ],
+};
 
 // аудио файлы
 const selectAudioLevel = () => {
-    switch (configGame.level) {
+    switch (GAME.level) {
         case 'level1':
-            return theme1;
+            return OST_level_1;
         case 'level2':
-            return theme2;
+            return OST_level_2;
         case 'level3':
-            return theme3;
+            return OST_level_3;
         case 'level4':
-            return theme4;
+            return OST_level_4;
         default:
-            return theme1;
+            return OST_level_1;
     }
 };
+
 export const AUDIO = {
-    Jump: loadAudio([Jump], 0.4),
-    Dead: loadAudio([Death], 0.1),
-    Theme1: loadAudio(() => selectAudioLevel(), 0.1),
+    jump: loadAudio([Sound_Jump], 0.4),
+    dead: loadAudio([Sound_Death], 0.1),
+    ostMusic: loadAudio(() => selectAudioLevel(), 0.1),
 };
+
+export function checkHero(hero: string): void {
+    GAME.heroName = hero;
+    switch (hero) {
+        case 'hero1':
+            HERO.offset = 0;
+            break;
+        case 'hero2':
+            HERO.offset = 200;
+            break;
+        case 'hero3':
+            HERO.offset = 400;
+            break;
+        case 'hero4':
+            HERO.offset = 600;
+            break;
+        default:
+            HERO.offset = 0;
+            break;
+    }
+}
+
+export function checkLevel(level: string): void {
+    GAME.level = level;
+}
+
+export function restart(): void {
+    window.cancelAnimationFrame(GAME.requestId);
+
+    GAME.speed = startSpeed;
+    GAME.scoreCounter = 0;
+    GAME.score = 0;
+    GAME.isGameStopped = false;
+    GAME.localRecord = 0;
+    GAME.audioPlayed = true;
+
+    // сброс BG
+    const { level } = GAME;
+    const _bg = BG[level];
+    for (let i = 0; i < _bg.length; i += 1) {
+        _bg[i].x = GAME.xPosBg;
+        _bg[i].x2 = GAME.winWidth;
+    }
+    // сброс PUSSY
+    for (let i = 0; i < PUSSY.enemy.length; i += 1) {
+        PUSSY.enemy[i].x = 1280 + GAME.random(pussyDistance[i]);
+        PUSSY.enemy[i].y = GAME.y_positionLine;
+        PUSSY.enemy[i].distance = 1.5;
+        PUSSY.enemy[i].attack = false;
+    }
+
+    // сброс HERO
+    HERO.position.x = 65;
+    HERO.position.y = GAME.y_positionLine;
+    HERO.event.run = true;
+    HERO.event.jump = false;
+
+    // скроем баннер
+    GAME.dom.gameBanner.current?.classList.add('hidden');
+    // скроем курсор
+    if(GAME?.dom?.canvas?.current){
+        GAME.dom.canvas.current.style.cursor = "none"
+    }
+}

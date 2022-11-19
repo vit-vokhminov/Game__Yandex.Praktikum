@@ -1,0 +1,38 @@
+.avatar {
+    padding: 15px;
+}
+
+.avatar_img {
+    width: 100px;
+    margin: 0 auto;
+}
+
+.avatar_img__size {
+    width: 100%;
+    border-radius: 50px 50px 50px 50px;
+}
+
+.file_input__hidden {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.btn_file_input {
+    display: block;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: var(--font-size-xxs);
+    font-family: var(--main-font-family);
+    background: var(--button-color);
+    border: 1px solid #81911f;
+    padding: 10px;
+    box-sizing: border-box;
+}

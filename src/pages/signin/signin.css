@@ -1,8 +1,14 @@
 .signin {
-    /*width: 25vw;*/
+    width: 360px;
     margin: auto;
 }
 
 .form__redirect {
     margin: 10px 0px 10px 0px;
+    text-align: center;
+}
+
+.description_user {
+    padding-top: 10px;
+    font-size: 13px;
 }

@@ -1,54 +1,52 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { API } from 'api';
+import Main from 'components/main';
+import HeaderMenu from 'components/header-menu';
+import { ANGELS } from 'components/game/media/js/parameters';
 import './leaderboard.css';
-import Main from '../../components/main';
-import LeaderboardItem from './leaderboardItem';
-import { getLeaderboard } from '../../selectors/widgets/app';
-import type { Store } from '../../reducers/types';
-import { getLeaderboardList } from '../../actions/app';
-import { FetchData } from '../../../app/api/leaderBoard/types';
 
-type Props = {
-    leaderboardList: { data: FetchData }[],
-    fetchLeaderboard: typeof getLeaderboardList,
-};
+const LeaderboardPage = () => {
 
-const LeaderboardPage = ({ leaderboardList, fetchLeaderboard }: Props) => {
-    useEffect(() => {
-        fetchLeaderboard();
+    const [leaders, setLeaders] = React.useState(null);
+
+    React.useEffect(() => {
+        API.getLeaders().then(response => {
+            const sortLeaders = response.data.sort(function (a, b) {
+                return b.record - a.record;
+            });
+            setLeaders(sortLeaders);
+        });
     }, []);
 
     return (
-        <Main title="Лидеры">
-            <div className="table-loaderboard">
-                {
-                    leaderboardList.length > 0
-                        ? leaderboardList.map((item, index) => {
-                            const {
-                                id, avatar, login, score_charleston,
-                            } = item.data;
-                            return (
-                                <LeaderboardItem
-                                    key={id}
-                                    avatar={avatar}
-                                    index={index + 1}
-                                    login={login}
-                                    score={score_charleston}
-                                />
-                            );
-                        })
-                        : <div className="empty__list">Список пуст</div>
-                }
-            </div>
-        </Main>
+        <>
+            <HeaderMenu />
+            <Main title='Топ 10 лидеров'>
+                <div className='table_loaderboard'>
+                    {leaders
+                        ? leaders.map((elem, i) => (
+                              <div
+                                  className='table_leaderboard_item'
+                                  key={elem.id}
+                              >
+                                  <div className='item_number'>
+                                      {i+1}
+                                  </div>
+                                  <img
+                                      src={ANGELS[elem.avatar]?.avatar || ""}
+                                      alt='avatar'
+                                      className='item_avatar'
+                                  />
+                                  <div className='item_name'>{elem.name}</div>
+                                  <div className='item_level'>{elem.level}</div>
+                                  <div className='item_count'>{elem.record}</div>
+                              </div>
+                          ))
+                        : null}
+                </div>
+            </Main>
+        </>
     );
 };
 
-const mapStateToProps = (store: Store) => ({
-    leaderboardList: getLeaderboard(store),
-});
-const mapDispatchToProps = {
-    fetchLeaderboard: getLeaderboardList,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardPage);
+export default React.memo(LeaderboardPage);

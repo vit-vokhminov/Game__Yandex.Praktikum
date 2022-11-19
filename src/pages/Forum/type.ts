@@ -5,11 +5,11 @@ export type PostType = {
     text: string,
     title: string,
     updatedAt: string,
-};
+}
 
 export type PropsPostType = {
     post: PostType | null
-};
+}
 
 export type MessageType = {
     author: string,
@@ -19,10 +19,8 @@ export type MessageType = {
     postId: number
     text: string,
     updatedAt: string,
-};
+}
 
 export type PropsCommentType = {
     message: MessageType
-};
-
-//export type MessagesType = MessageType[] | null;
+}

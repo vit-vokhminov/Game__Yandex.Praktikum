@@ -2,34 +2,44 @@
 import { RefObject } from 'react';
 
 export type Game = {
-    ctx: CanvasRenderingContext2D | null,
-    winWidth: number,
-    winHeight: number,
-    y_positionLine: number,
-    allCount: number,
-    loadCount: number,
-    yPosBg: number,
-    speed: number,
-    scoreCounter: number,
-    score: number,
-    scoreColor: string,
-    isGameStopped: boolean,
-    localStorageRecord: number,
-    localRecord: number,
-    audioPlayed: boolean,
-    dom: Record<string, RefObject<HTMLCanvasElement> | RefObject<HTMLDivElement>>,
-    setLeaderboard: ((arg: number) => void),
-    random: (range: number[]) => number,
-    requestId: number,
-    heroName: string,
-    level: string,
+    ctx: CanvasRenderingContext2D | null;
+    user: any;
+    winWidth: number;
+    winHeight: number;
+    y_positionLine: number;
+    allCount: number;
+    loadCount: number;
+    yPosBg: number;
+    xPosBg: number;
+    speed: number;
+    scoreCounter: number;
+    score: number;
+    scoreColor: string;
+    isGameStopped: boolean;
+    localRecord: number;
+    audioPlayed: boolean;
+    dom: Record<
+        string,
+        RefObject<HTMLCanvasElement> | RefObject<HTMLDivElement>
+    >;
+    setLeaderboard: (arg: number) => void;
+    random: (range: number[]) => number;
+    requestId: number;
+    heroName: string;
+    level: string;
 };
 
 export type Background = {
-    path: HTMLImageElement,
+    path: any,
     x: number,
     x2: number,
     speed: number,
+};
+
+export type BgImage = {
+    dom: HTMLImageElement,
+    width: number,
+    height: number,
 };
 
 export type SpriteImage = {
@@ -44,19 +54,20 @@ export type SpriteImage = {
 
 export type Hero = {
     img: {
-        run: SpriteImage,
-        jump: SpriteImage,
-        hurt: SpriteImage,
-        stand: SpriteImage,
-    },
+        run: SpriteImage;
+        jump: SpriteImage;
+        hurt: SpriteImage;
+        stand: SpriteImage;
+    };
     position: {
-        x: number,
-        y: number,
-    },
+        x: number;
+        y: number;
+    };
     event: {
-        run: boolean,
-        jump: boolean,
-    },
+        run: boolean;
+        jump: boolean;
+    };
+    offset: number;
 };
 
 export type Track = {
@@ -69,17 +80,25 @@ export type Track = {
     setVolume: (arg: number) => void,
 };
 
+export type PussyLevels = {
+    run: SpriteImage;
+    attack: SpriteImage;
+    stop: SpriteImage;
+}
+
 export type PussyEnemy = {
-    x: number,
-    y: number,
-    distance: number,
-    attack: boolean,
-    skin: number,
+    x: number;
+    y: number;
+    offset: number;
+    distance: number;
+    attack: boolean;
+    skin: number;
 };
 
 export type TypePussy = {
-    run: SpriteImage,
-    attack: SpriteImage,
-    stop: SpriteImage,
-    enemy: PussyEnemy[],
+    level1: PussyLevels;
+    level2: PussyLevels;
+    level3: PussyLevels;
+    level4: PussyLevels;
+    enemy: PussyEnemy[];
 };

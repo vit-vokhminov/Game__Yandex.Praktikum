@@ -1,70 +1,39 @@
 import React from 'react';
-import { Form, Field } from 'react-final-form';
-import { connect } from 'react-redux';
-import { avatarAction } from '../../../actions/users/avatar';
-import Button from '../../button';
-import Angel1 from '../../../assets/img/Angels1.png';
-import { getUserAvatar } from '../../../selectors/collections/auth';
-import type { Store } from '../../../reducers/types';
-import type { Props, FormProps } from './types';
+import { useSelector } from 'react-redux';
+import { ANGELS } from 'components/game/media/js/parameters';
+import s from './avatarForm.module.css';
 
-const AvatarForm = ({ avatarLink, avatar }: Props) => {
-    const onSubmitHandler = (form: FormProps) => {
-            const formData = new FormData();
-            formData.append('avatar', form.avatar[0]);
+const AvatarForm = () => {
 
-            avatar(formData);
-    };
+    const { user } = useSelector((state: any) => state.userReducer);
 
     return (
-        <div className="avatar">
-            <Form
-                onSubmit={onSubmitHandler}
-                render={({ handleSubmit, submitting }) => (
-                    <form className="avatar_edit" onSubmit={handleSubmit}>
-                        <div className="avatar_img">
-                            <img
-                                className="avatar_img__size"
-                                src={avatarLink || Angel1}
-                                alt="avatar"
-                            />
-                        </div>
+        <div className={s.avatar}>
+            <form>
+                <div className={s.avatar_img}>
+                    <img
+                        src={ANGELS[user.avatar]?.avatar || ""}
+                        className={s.avatar_img__size}
+                        alt='avatar'
+                    />
+                </div>
 
-                        <Field<FileList> name="avatar">
-                            {({ input: { value, onChange, ...input } }) => (
-                                <label htmlFor="file-input" className="btn-file-input">
-                                    <input
-                                        {...input}
-                                        onChange={({ target }) => onChange(target.files)}
-                                        id="file-input"
-                                        className="file-input__hidden"
-                                        type="file"
-                                        accept=".jpg, .jpeg, .png"
-                                    />
-                                    Загрузить
-                                </label>
-                            )}
-                        </Field>
-                        <Button
-                            type="submit"
-                            className="btn-file-input"
-                            disabled={submitting}
-                        >
-                            Сохранить
-                        </Button>
-                    </form>
-                )}
-            />
+                <label htmlFor='avatar_file_input' className={s.btn_file_input}>
+                    <input
+                        id='avatar_file_input'
+                        className={s.file_input__hidden}
+                        type='file'
+                        accept='.jpg, .jpeg, .png'
+                    />
+                    Загрузить
+                </label>
+
+                <button type='submit' className={s.btn_file_input}>
+                    Сохранить
+                </button>
+            </form>
         </div>
     );
 };
 
-const mapStateToProps = (store: Store) => ({
-    avatarLink: getUserAvatar(store),
-});
-
-const mapDispatchToProps = {
-    avatar: avatarAction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AvatarForm);
+export default AvatarForm;

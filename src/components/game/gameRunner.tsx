@@ -1,75 +1,75 @@
 import React, { useRef, useEffect, ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGameStart, setLeaderboard } from '../../actions/app';
-import './game.css';
+import { setGameStart } from 'redux/store/userReducer';
 import {
-    GAME2,
+    GAME,
+    HERO,
     AUDIO,
+    restart,
 } from './media/js/parameters';
+import drawRunner from './media/js/drawRunner';
+import jump from './media/js/jump';
 import {
     GameOver,
     Smile,
 } from './media/js/assetsLinks';
-import configGame from './media/js/configGame';
+import s from './game.module.css';
 
 function GameRunner(): ReactElement {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const gameBannerRef = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
-    const profile = useSelector(({ collections }) => collections.user);
-    const classGame = useRef();
-
+    const { user } = useSelector((state: any) => state.userReducer);
+    
     useEffect(() => {
         if (canvasRef.current && gameBannerRef.current) {
-            const { clientWidth, clientHeight } = document.body;
-            canvasRef.current.width = clientWidth;
-            canvasRef.current.height = clientHeight;
+            canvasRef.current.width = GAME.winWidth;
+            canvasRef.current.height = GAME.winHeight;
 
-            window.addEventListener('resize', () => {
-                canvasRef.current.width = document.body.clientWidth;
-                canvasRef.current.height = document.body.clientHeight;
-            });
-
-            const game2 = new GAME2(canvasRef.current, true);
-            classGame.current = game2;
-            game2.Start();
-            game2.dom = {
+            GAME.ctx = canvasRef.current.getContext('2d');
+            GAME.dom = {
                 canvas: canvasRef,
                 gameBanner: gameBannerRef,
             };
+            GAME.user = user;
+            HERO.event.run = true;
+            document.addEventListener('mousedown', jump);
 
-            game2.setLeaderboard = (arg: number) => dispatch(setLeaderboard({
-                score_charleston: arg,
-                id: profile.id,
-                login: profile.login,
-                avatar: profile.avatar,
-            }));
+            // дожидаемся загрузки всех изображений
+            const int = setInterval(() => {
+                if (GAME.allCount === GAME.loadCount) {
+                    clearInterval(int);
+                    restart();
+                    drawRunner();
+                }
+            }, 1000 / 60);
         }
+        return () => {
+            // удаление событий мыши
+            document.removeEventListener('mousedown', jump);
+        };
     }, []);
 
     const handleRestart = () => {
-        const game = classGame.current;
-        game.restart();
-        document.body.requestPointerLock();
-        AUDIO.Theme1.play();
-        AUDIO.Theme1.setVolume(0.08);
-        document.body.requestPointerLock();
+        restart();
+        drawRunner();
+        AUDIO.ostMusic.play();
     };
+    
     const handleGameExite = () => {
-        const game = classGame.current;
-        game.restart();
-        game.pause = true;
-        configGame.isPause = true;
+        restart();
         dispatch(setGameStart(false));
     };
+
     return (
-        <div className="game">
-            <canvas id="canvas" ref={canvasRef}>Эх... Ваш браузер не поддерживает Canvas, Вы не сможете сыграть в игру...</canvas>
-            <div className="game_over hidden" ref={gameBannerRef}>
-                <div className="game_over_main">
-                    <img src={GameOver} className="img_game_over" alt="GameOver" />
-                    <button type="button" className="game_restar" onClick={() => handleRestart()}>Повторить</button>
-                    <button type="button" className="game_restar game_exit" onClick={() => handleGameExite()}>Выход</button>
+        <div className={s.game}>
+            <canvas id={s.canvas} ref={canvasRef}>Эх... Ваш браузер не поддерживает Canvas, Вы не сможете сыграть в игру...</canvas>
+            <div className={`${s.game_over} hidden`} ref={gameBannerRef}>
+                <div className={s.game_over_main}>
+                    <img src={Smile} className={s.img_smile} alt="Smile" />
+                    <img src={GameOver} className={s.img_game_over} alt="GameOver" />
+                    <button type="button" className={s.game_restar} onClick={() => handleRestart()}>Повторить</button>
+                    <button type="button" className={`${s.game_restar} ${s.game_exit}`} onClick={() => handleGameExite()}>Выход</button>
                 </div>
             </div>
         </div>

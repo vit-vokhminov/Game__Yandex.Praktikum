@@ -1,0 +1,12 @@
+.game_menu {}
+
+.game_menu__block {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 28px;
+}
+
+.mr {
+	margin-right: 60px;
+}

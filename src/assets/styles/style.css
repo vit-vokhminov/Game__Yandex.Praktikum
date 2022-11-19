@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+@import "./global";
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+}
+
+.App {
+    display: flex;
+    height: 100vh;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+
+

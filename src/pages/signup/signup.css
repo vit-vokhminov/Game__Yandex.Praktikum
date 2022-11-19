@@ -1,8 +1,13 @@
 .registration {
-    /*width: 25vw;*/
+    width: 360px;
     margin: auto;
 }
 
 .form__redirect {
     text-align: center;
+}
+
+.description_user {
+    padding-top: 10px;
+    font-size: 13px;
 }

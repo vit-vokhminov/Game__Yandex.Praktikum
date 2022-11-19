@@ -1,0 +1,24 @@
+:root {
+    --main-font-family: 'Play';
+
+    --button-color: #b8d220;
+    --textInput-color: #292929;
+    --titleButton-color: #292929;
+    --text-color: #000000;
+    --text-color-light: #f3f3f3;
+    --link-color: #4791ff;
+    --border-input-color: #a0a0a0;
+    --orange: #dc862f;
+    --orangeHover: #f7760e;
+    --errorMessage: #8E35A6;
+
+    --font-size-titlePage: 48px;
+    --font-size-md: 24px;
+
+    --font-size-xl: 200px;
+    --font-size-lg: 144px;
+    --font-size-md: 48px;
+    --font-size-sm: 36px;
+    --font-size-xs: 24px;
+    --font-size-xxs: 16px;
+}

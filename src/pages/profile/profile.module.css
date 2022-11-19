@@ -1,0 +1,12 @@
+.profile_main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0px 20px; 
+}
+
+.form {
+    padding: 15px;
+}
+
+
+

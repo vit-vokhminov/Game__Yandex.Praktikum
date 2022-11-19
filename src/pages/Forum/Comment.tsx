@@ -1,8 +1,8 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import CommentAdd from './CommentAdd';
-import { API } from '../../api';
-import { PropsCommentType, MessageType } from './type';
+import React from "react";
+import { API } from "api";
+import CommentAdd from "./CommentAdd";
+import { useParams } from "react-router-dom";
+import { PropsCommentType, MessageType } from "./type";
 
 interface UseParamsTypes {
     id: string;
@@ -26,7 +26,7 @@ function Comment(props: PropsCommentType) {
                     console.log(error);
                 });
         },
-        [id, message, answers, viewForn],
+        [id, message, answers, viewForn]
     );
 
     React.useEffect(() => {
@@ -43,38 +43,39 @@ function Comment(props: PropsCommentType) {
         <>
             <div className="message">
                 <div className="message_main">
-                    <div className="message_content">
-                        <p>{message.text}</p>
-                        <div className="info">
-                            <span>
-                                <b>{message.author || ''}</b>
-                            </span>
-                            <span>
-                                {message.createdAt
-                                    ? new Date(message.createdAt).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })
-                                    : 'Без даты'}
-                            </span>
-                        </div>
+                    <div className="info">
+                        <span>
+                            <b>{message.author || ""}</b>
+                        </span>
+                        <span>
+                            {message.createdAt
+                                ? new Date(
+                                      message.createdAt
+                                  ).toLocaleDateString()
+                                : "Без даты"}
+                        </span>
                     </div>
-                    <div className="message_answer" onClick={() => setViewForn(!viewForn)}>
-                        {viewForn ? 'СКРЫТЬ' : 'ОТВЕТИТЬ'}
-                    </div>
-                    {viewForn && (
-                        <CommentAdd
-                            handleAddMessages={handleAddMessagesToMessages}
-                        />
-                    )}
+                    <p>{message.text}</p>
                 </div>
                 <div className="answers">
                     <div className="answer-main">
-                        {!!answers.length
-                            && answers.map((elem, i) => (
-                                <>
-                                    <Comment key={i} message={elem} />
-                                </>
+                        {!!answers.length &&
+                            answers.map((elem, i) => (
+                                <Comment key={i} message={elem} />
                             ))}
                     </div>
                 </div>
+                <div
+                    className="message_answer"
+                    onClick={() => setViewForn(!viewForn)}
+                >
+                    {viewForn ? "Скрыть" : "Ответить"}
+                </div>
+                {viewForn && (
+                    <CommentAdd
+                        handleAddMessages={handleAddMessagesToMessages}
+                    />
+                )}
             </div>
         </>
     );

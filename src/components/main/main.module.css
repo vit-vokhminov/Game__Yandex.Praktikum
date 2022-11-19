@@ -1,0 +1,46 @@
+.box_content {
+    background: #ffffff8a;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    height: max-content;
+    margin: auto;
+    position: relative;
+    border-radius: 20px;
+    box-shadow: 1px 1px 70px 0px rgb(50 50 50 / 40%);
+    min-width: 360px;
+    max-width: 1000px;
+}
+
+.main_font_family {
+    font-family: var(--main-font-family);
+}
+
+.content {
+    padding: 0 25px 25px;
+    width: 660px;
+    max-width: 100%;
+    min-height: 400px;
+}
+
+.header {
+    display: flex;
+}
+
+.btn_back {
+    flex: 0 0 auto;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+}
+
+.header_title {
+    flex: 1 0 auto;
+    padding: 10px;
+}
+
+.title_page {
+    font-size: var(--font-size-sm);
+    font-family: var(--main-font-family);
+    text-align: center;
+    font-weight: bolder;
+}

@@ -1,0 +1,35 @@
+.list__hero {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
+}
+
+.list__levels {
+    display: flex;
+    margin: 20px 0px;
+    grid-gap: 10px;
+    flex-wrap: wrap;
+}
+
+.hero {
+    width: 100px;
+    cursor: pointer;
+}
+
+.level {
+    width: 180px;
+    padding: 10px;
+    flex: 1 0 30%;
+    min-width: 100px;
+    cursor: pointer;
+}
+
+.hero:hover,
+.level:hover {
+    outline: 3px solid #0000002e;
+    outline-offset: 0px;
+}
+
+.active {
+    outline: 3px solid var(--button-color);
+}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { PropsPostType } from './type';
+import React from "react";
+import { PropsPostType } from "./type";
 
 function Topic({ post }: PropsPostType) {
     return (
@@ -8,7 +8,9 @@ function Topic({ post }: PropsPostType) {
                 <div className="forum--theme">
                     <div className="forum--theme-content">
                         <div className="forum--main">
-                            <b>{post.title}</b>
+                            <div className="forum-themes-title">
+                                <b>{post.title}</b>
+                            </div>
                             <div className="forum-themes-text">{post.text}</div>
                         </div>
 
