@@ -2,8 +2,8 @@ import React from 'react';
 import { API } from 'api';
 import { Main, HeaderMenu } from 'components';
 import { Link } from 'react-router-dom';
-import './forum.css';
 import { PostType } from './type';
+import s from './forum.module.css';
 
 function ForumPosts() {
     const [posts, setPosts] = React.useState<PostType[] | null>(null);
@@ -18,25 +18,25 @@ function ForumPosts() {
         <>
             <HeaderMenu />
             <Main title='Форум'>
-                <div className='forum'>
-                    <div className='forum-content'>
-                        <div className='forum-add-topic'>
+                <div className={s.forum}>
+                    <div className={s.forum_content}>
+                        <div className={s.forum_add_topic}>
                             <Link to='/forum-add-topic'>
                                 Создать новый раздел
                             </Link>
                         </div>
-                        <div className='forum-title'>темы</div>
-                        <div className='forum-themes'>
+                        <div className={s.forum_title}>темы</div>
+                        <div className={s.forum_themes}>
                             {!!posts &&
                                 posts.map(elem => (
-                                    <div className='forum--theme' key={elem.id}>
+                                    <div className={s.forum__theme} key={elem.id}>
                                         <Link to={`/forum-topic/${elem.id}`}>
-                                            <div className='forum--main'>
-                                                <div className='forum-themes-title'>
+                                            <div className={s.forum__main}>
+                                                <div className={s.forum_themes_title}>
                                                     {elem.title}
                                                 </div>
                                             </div>
-                                            <div className='info'>
+                                            <div className={s.info}>
                                                 <span>
                                                     <b>{elem.author}</b>
                                                 </span>

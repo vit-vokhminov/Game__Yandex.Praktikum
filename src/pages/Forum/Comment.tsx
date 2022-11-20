@@ -3,6 +3,7 @@ import { API } from "api";
 import CommentAdd from "./CommentAdd";
 import { useParams } from "react-router-dom";
 import { PropsCommentType, MessageType } from "./type";
+import s from './forum.module.css';
 
 interface UseParamsTypes {
     id: string;
@@ -41,9 +42,9 @@ function Comment(props: PropsCommentType) {
 
     return (
         <>
-            <div className="message">
-                <div className="message_main">
-                    <div className="info">
+            <div className={s.message}>
+                <div className={s.message_main}>
+                    <div className={s.info}>
                         <span>
                             <b>{message.author || ""}</b>
                         </span>
@@ -57,8 +58,8 @@ function Comment(props: PropsCommentType) {
                     </div>
                     <p>{message.text}</p>
                 </div>
-                <div className="answers">
-                    <div className="answer-main">
+                <div className={s.answers}>
+                    <div className={s.answer_main}>
                         {!!answers.length &&
                             answers.map((elem, i) => (
                                 <Comment key={i} message={elem} />
@@ -66,7 +67,7 @@ function Comment(props: PropsCommentType) {
                     </div>
                 </div>
                 <div
-                    className="message_answer"
+                    className={s.message_answer}
                     onClick={() => setViewForn(!viewForn)}
                 >
                     {viewForn ? "Скрыть" : "Ответить"}

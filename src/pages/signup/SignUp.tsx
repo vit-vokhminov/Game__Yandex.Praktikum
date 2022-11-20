@@ -1,14 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik, FormikProvider, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { sagaFetchRegistration } from 'redux/store/userReducer';
+import { Button, ButtonSpinner } from 'components/UI/Button';
+import { Input } from 'components/UI/Input';
+import { useAppDispatch } from "redux/store";
+import { registration } from "redux/reducers/user/userActions";
 import { Main, ServerMessage } from 'components';
-import './signup.css';
+import s from './signup.module.css';
 
 function SignUp() {
-    const dispatch = useDispatch();
+    const [shipment, setShipment] = React.useState(false);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -26,9 +30,16 @@ function SignUp() {
                 .oneOf([Yup.ref('password'), null], 'Пароли не совпадают')
                 .required('Пароли не совпадают')
         }),
-        onSubmit: (values) => {
-            console.log(values);
-            dispatch(sagaFetchRegistration({ values }));
+        onSubmit: async (values) => {
+            setShipment(true);
+            try{
+                const user = await dispatch(registration({ values }));
+                if (user) {
+                    navigate('/');
+                }
+            }catch(e){
+                setShipment(false);
+            }
         }
     });
 
@@ -39,44 +50,46 @@ function SignUp() {
             <div className='signin'>
                 <FormikProvider value={formik}>
                     <Form>
-                        <div className='form'>
-                            <Field
-                                name='email'
-                                type='email'
-                                placeholder='Почта'
-                                className='input'
-                            />
-                            <Field
-                                name='login'
-                                type='text'
-                                placeholder='Имя в игре'
-                                className='input'
-                            />
-                            <Field
-                                name='password'
-                                type='password'
-                                placeholder='Пароль'
-                                className='input'
-                            />
-                            <Field
-                                name='confirm'
-                                type='password'
-                                placeholder='Пароль (ещё раз)'
-                                className='input'
-                            />
-                            <div className='form__redirect'>
-                                <Link to='/signin'>Войти</Link>
-                            </div>
-                            <button
-                                type='submit'
-                                className='btn fullwidth'>
-                                Регистрация
-                            </button>
-                            <p className='description_user'>
-                                Регистрация нужна только для рейтинга и доступа к форуму. Ваши данные не нужно подтверждать. Можете их
-                                просто придумать.
-                            </p>
+                        <Field
+                            name='email'
+                            type='email'
+                            placeholder='Почта'
+                            as={Input}
+                        />
+                        <Field
+                            name='login'
+                            type='text'
+                            placeholder='Имя в игре'
+                            as={Input}
+                        />
+                        <Field
+                            name='password'
+                            type='password'
+                            placeholder='Пароль'
+                            as={Input}
+                        />
+                        <Field
+                            name='confirm'
+                            type='password'
+                            placeholder='Пароль (ещё раз)'
+                            as={Input}
+                        />
+                        <div className={s.form__redirect}>
+                            <Link to='/signin'>Войти</Link>
                         </div>
+                        {shipment ? (
+                            <ButtonSpinner />
+                        ) : (
+                            <Button
+                                type='submit'
+                                disabled={!(formik.isValid)}>
+                                Регистрация
+                            </Button>
+                        )}
+                        <p className={s.description_user}>
+                            Регистрация нужна только для рейтинга и доступа к форуму. Ваши данные не нужно подтверждать. Можете их
+                            просто придумать.
+                        </p>
                     </Form>
                 </FormikProvider>
 

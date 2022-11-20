@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Main from 'components/main';
 import HeaderMenu from 'components/header-menu';
 import { PostType, MessageType } from './type';
+import s from './forum.module.css';
 
 interface UseParamsTypes {
     id: string;
@@ -50,12 +51,12 @@ function ForumPost() {
         <>
             <HeaderMenu />
             <Main title='Форум' style={{width: "700px"}}>
-                <div className='forum'>
-                    <div className='forum-content'>
+                <div className={s.forum}>
+                    <div className={s.forum_content}>
                         <Topic post={post} />
 
                         {
-                            <div className='messages'>
+                            <div className={s.messages}>
                                 {messages.length ? (
                                     messages.map(elem => (
                                         <Comment key={elem.id} message={elem} />

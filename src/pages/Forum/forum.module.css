@@ -13,16 +13,16 @@
 .forum {
     
 }
-.forum-content {
+.forum_content {
     padding: 20px 0 0;
 }
-.forum-add-topic {
+.forum_add_topic {
     margin-bottom: 10px;
 }
-.forum-add-topic a {
+.forum_add_topic a {
     position: relative;
 }
-.forum-add-topic a:after {
+.forum_add_topic a:after {
     content: "";
     display: block;
     width: 100%;
@@ -32,23 +32,23 @@
     bottom: -2px;
     border-bottom: 1px solid #ccc;
 }
-.forum-add-topic a:hover:after {
+.forum_add_topic a:hover:after {
     border-bottom: none;
 }
-.forum-title {
+.forum_title {
     font-weight: bolder;
     margin-bottom: 10px;
 }
-.forum-themes {
+.forum_themes {
 }
-.forum--theme {
+.forum__theme {
     background-color: #fff;
     margin-bottom: 10px;
 }
-.forum--theme:hover {
+.forum__theme:hover {
     background-color: rgb(255 255 255 / 85%);
 }
-.forum--theme a {
+.forum__theme a {
     padding: 10px 20px;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -68,7 +68,7 @@
     -webkit-align-items: flex-start;
     -ms-flex-align: start;
 }
-.forum--theme-content {
+.forum__theme_content {
     padding: 10px 20px;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -88,12 +88,12 @@
     -webkit-align-items: flex-start;
     -ms-flex-align: start;
 }
-.forum--main {
+.forum__main {
     width: calc(100% - 100px);
 }
-.forum-themes-title {
+.forum_themes_title {
 }
-.forum-themes-text {
+.forum_themes_text {
 }
 .info {
     width: 100px;
@@ -151,7 +151,7 @@ article.post .info {
 .message_form form label {
     margin-bottom: 2px;
 }
-.message_form .form-text {
+.message_form .form_text {
     margin-bottom: 0px;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -175,12 +175,12 @@ article.post .info {
 .message_form label {
     font-size: 13px;
 }
-.message_form .form-text textarea {
+.message_form .form_text textarea {
     min-height: 40px;
     width: calc(100% - 120px);
 }
 
-.message_form .form-button {
+.message_form .form_button {
     margin: 0;
 }
 .message {
@@ -222,17 +222,17 @@ article.post .info {
     position: relative;
 }
 
-.btn-answer {
+.btn_answer {
     padding-top: 10px;
     font-size: 14px;
     cursor: pointer;
 }
 
-.btn-answer:hover {
+.btn_answer:hover {
     color: #00d2ff;
 }
 
-.answer-main {
+.answer_main {
     border-left: 1px solid #ccc;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -301,12 +301,12 @@ article.post .info {
     flex-direction: column;
     flex: 1;
 }
-.form-button {
+.form_button {
     display: flex;
     justify-content: flex-end;
 }
 
-.form-button button {
+.form_button button {
     min-height: 30px;
     border: 1px solid #000;
     background-color: #fff;
@@ -320,12 +320,12 @@ article.post .info {
     user-select: none;
 }
 
-.form-button button:disabled,
-.form-button button[disabled='disabled'] {
+.form_button button:disabled,
+.form_button button[disabled='disabled'] {
     pointer-events: none;
     opacity: 0.7;
 }
 
-.form-button button:hover {
+.form_button button:hover {
     filter: brightness(0.9);
 }

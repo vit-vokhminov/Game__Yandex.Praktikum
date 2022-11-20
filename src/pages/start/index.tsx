@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from "redux/store";
 import CN from 'classnames';
-import { setGameStart } from 'redux/store/userReducer';
+import { userSlice } from "redux/reducers/user/userSlice";
 import { Main, HeaderMenu, GameMenu, GameRunner, StartOptions } from 'components';
 import { AUDIO } from 'components/game/media/js/parameters';
 import ForwardBtn from 'components/UI/ForwardBtn';
@@ -9,8 +9,9 @@ import s from './start.module.css';
 
 function Start(): ReactElement {
 
-    const dispatch = useDispatch();
-    const gameRunner = useSelector((state: any) => state.userReducer.gameRunner);
+    const dispatch = useAppDispatch();
+    const { setGameStart } = userSlice.actions;
+    const { gameRunner } = useAppSelector((store: any) => store.userSlice);
     const [isOptions, setIsOptions] = useState(false);
 
     const handleStartGame = () => {

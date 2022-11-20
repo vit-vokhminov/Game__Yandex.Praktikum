@@ -19,7 +19,6 @@ export default function gameStop(): void {
     // запись нового рекорда
     if (GAME.localRecord > Number(GAME.user.record)) {
         const record = Math.floor(GAME.score);
-
         GAME.user.avatar = GAME.heroName;
         GAME.user.level = LEVELS[GAME.level].name;
         GAME.user.record = record;

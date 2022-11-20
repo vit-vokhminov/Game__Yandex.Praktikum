@@ -28,7 +28,8 @@ npm i -D dotenv-webpack
 
 npm i react react-dom
 npm i react-router-dom
-npm i react-redux redux-saga
+npm i @reduxjs/toolkit
+npm i @types/react-redux
 npm i classnames
 npm i axios
 npm i formik

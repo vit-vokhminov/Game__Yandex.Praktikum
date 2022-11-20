@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from "redux/store";;
 import { ANGELS } from 'components/game/media/js/parameters';
 import s from './avatarForm.module.css';
 
 const AvatarForm = () => {
 
-    const { user } = useSelector((state: any) => state.userReducer);
+    const { user } = useAppSelector((store: any) => store.userSlice);
 
     return (
         <div className={s.avatar}>

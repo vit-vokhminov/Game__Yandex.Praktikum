@@ -2,14 +2,17 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik, FormikProvider, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { sagaFetchLogin } from 'redux/store/userReducer';
+import { useAppDispatch } from "redux/store";
+import { login } from "redux/reducers/user/userActions";
+import { Button, ButtonSpinner } from 'components/UI/Button';
+import { Input } from 'components/UI/Input';
 import { Main, ServerMessage } from 'components';
-import './signin.css';
+import s from './signin.module.css';
 
 function SignIn() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [shipment, setShipment] = React.useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -21,12 +24,15 @@ function SignIn() {
             email: Yup.string().email('Укажите почту').required('Укажите почту'),
             password: Yup.string().min(6, 'Не менее 6 символов').required('Не менее 6 символов')
         }),
-        onSubmit: (values) => {
-            const user = dispatch(sagaFetchLogin({ values }));
-            if (user.payload.values) {
-                console.log(user);
-                navigate('/');
-                console.log('----');
+        onSubmit: async (values) => {
+            setShipment(true);
+            try{
+                const user = await dispatch(login({ values }));
+                if (user) {
+                    navigate('/');
+                }
+            }catch(e){
+                setShipment(false);
             }
         }
     });
@@ -36,36 +42,38 @@ function SignIn() {
             title='GAME'
             style={{ width: '360px' }}
             offBtnIcon>
-            <div className='signin'>
+            <div className={s.signin}>
                 <FormikProvider value={formik}>
                     <Form>
-                        <div className='form'>
-                            <Field
-                                name='email'
-                                type='text'
-                                placeholder='Почта'
-                                className='input'
-                            />
-                            <Field
-                                name='password'
-                                type='password'
-                                placeholder='Пароль'
-                                className='input'
-                            />
-                            <div className='form__redirect'>
-                                <Link to='/signup'>Регистрация</Link>
-                            </div>
-                            <button
-                                type='submit'
-                                className='btn fullwidth'>
-                                Вход
-                            </button>
-                            <p className='description_user'>
-                                Авторизация нужна только для рейтинга и доступа к форуму. Ваши данные не нужно подтверждать. Можете их
-                                просто придумать.
-                            </p>
-                            <ServerMessage />
+                        <Field
+                            name='email'
+                            type='text'
+                            placeholder='Почта'
+                            as={Input}
+                        />
+                        <Field
+                            name='password'
+                            type='password'
+                            placeholder='Пароль'
+                            as={Input}
+                        />
+                        <div className={s.form__redirect}>
+                            <Link to='/signup'>Регистрация</Link>
                         </div>
+                        {shipment ? (
+                            <ButtonSpinner />
+                        ) : (
+                            <Button
+                                type='submit'
+                                disabled={!(formik.isValid)}>
+                                Вход
+                            </Button>
+                        )}
+                        <p className={s.description_user}>
+                            Авторизация нужна только для рейтинга и доступа к форуму. Ваши данные не нужно подтверждать. Можете их
+                            просто придумать.
+                        </p>
+                        <ServerMessage />
                     </Form>
                 </FormikProvider>
             </div>

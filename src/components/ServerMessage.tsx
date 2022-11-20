@@ -1,15 +1,15 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from 'redux/store';
 
-import { setServerMessage } from 'redux/store/userReducer';
-
-import { RootStateType } from 'types/ReduxTypes';
+import { userSlice } from 'redux/reducers/user/userSlice';
+//import { RootStateType } from 'types/ReduxTypes';
 
 function ServerMessage() {
-    const serverMessage = useSelector(
-        (state: RootStateType) => state.userReducer.serverMessage
-    );
-    const dispatch = useDispatch();
+    const { serverMessage } = useAppSelector((store: any) => store.userSlice);
+    const dispatch = useAppDispatch();
+
+    const { setServerMessage } = userSlice.actions;
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -17,11 +17,7 @@ function ServerMessage() {
         }, 3000);
     }, [serverMessage, dispatch]);
 
-    return (
-        <>
-            {serverMessage && <div className='form-error'>{serverMessage}</div>}
-        </>
-    );
+    return <>{serverMessage && <div className='form-error'>{serverMessage}</div>}</>;
 }
 
 export default ServerMessage;

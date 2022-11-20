@@ -4,6 +4,7 @@ import { useFormik, FormikProvider, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { API } from 'api';
 import{ Main, HeaderMenu } from 'components';
+import s from './forum.module.css';
 
 function ForumAddPost() {
     const navigate = useNavigate();
@@ -43,11 +44,11 @@ function ForumAddPost() {
         <>
             <HeaderMenu />
             <Main title='Форум'>
-                <div className='forum'>
-                    <div className='forum-content'>
+                <div className={s.forum}>
+                    <div className={s.forum_content}>
                         <FormikProvider value={formik}>
                             <Form>
-                                <div className='form-info'>
+                                <div className={s.form_info}>
                                     <label>
                                         Заголовок
                                         <Field
@@ -68,7 +69,7 @@ function ForumAddPost() {
                                         ></Field>
                                     </label>
                                 </div>
-                                <div className='form-button'>
+                                <div className={s.form_button}>
                                     <button
                                         type='submit'
                                         disabled={

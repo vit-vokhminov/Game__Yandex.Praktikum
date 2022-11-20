@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFormik, FormikProvider, Field, Form } from 'formik';
 import * as Yup from 'yup';
+import s from './forum.module.css';
 
 type FormValueType = {
     author: string,
@@ -33,17 +34,17 @@ function CommentAdd(props: HandleAddMessagesType) {
 
     return (
         <>
-            <div className='message_form'>
+            <div className={s.message_form}>
                 <FormikProvider value={formik}>
                     <Form>
                         <label>Добавить комментарий</label>
-                        <div className='form-text'>
+                        <div className={s.form_text}>
                             <Field
                                 as='textarea'
                                 type='text'
                                 name='text'
                             ></Field>
-                            <div className='form-button'>
+                            <div className={s.form_button}>
                                 <button
                                     type='submit'
                                     disabled={!(formik.isValid && formik.dirty)}

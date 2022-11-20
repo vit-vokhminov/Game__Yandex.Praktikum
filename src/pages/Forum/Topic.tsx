@@ -1,20 +1,21 @@
 import React from "react";
 import { PropsPostType } from "./type";
+import s from './forum.module.css';
 
 function Topic({ post }: PropsPostType) {
     return (
         <>
             {!!post && (
-                <div className="forum--theme">
-                    <div className="forum--theme-content">
-                        <div className="forum--main">
-                            <div className="forum-themes-title">
+                <div className={s.forum__theme}>
+                    <div className={s.forum__theme_content}>
+                        <div className={s.forum__main}>
+                            <div className={s.forum_themes_title}>
                                 <b>{post.title}</b>
                             </div>
-                            <div className="forum-themes-text">{post.text}</div>
+                            <div className={s.forum_themes_text}>{post.text}</div>
                         </div>
 
-                        <div className="info">
+                        <div className={s.info}>
                             <span>
                                 <b>{post.author}</b>
                             </span>

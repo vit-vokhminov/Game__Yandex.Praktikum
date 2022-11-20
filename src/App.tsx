@@ -1,18 +1,17 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useAppDispatch, useAppSelector } from "redux/store";
+import { checkAuth } from "redux/reducers/user/userActions";
 import { Start, SignIn, SignUp, ForumPosts, ForumPost, ForumAddPost, LeaderBoard, Profile, ErrorPage } from './pages';
 import { GameStatic, PrivateRoute } from 'components';
-import { sagaFetchCheckAuth } from 'redux/store/userReducer';
 import 'assets/styles/style.css';
 
 function App() {
-    const dispatch = useDispatch();
-    const {userAuth, isLoading, gameRunner} = useSelector((state: any) => state.userReducer);
-
+    const dispatch = useAppDispatch();
+    const { userAuth, isLoading, gameRunner } = useAppSelector((store: any) => store.userSlice);
+    
     React.useEffect(() => {
-        dispatch(sagaFetchCheckAuth());
+        dispatch(checkAuth());
     }, [dispatch]);
     
     return (
