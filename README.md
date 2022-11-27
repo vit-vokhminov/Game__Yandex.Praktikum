@@ -8,8 +8,6 @@
 
 [Презентация](https://docs.google.com/presentation/d/1wku55QD2bHyMIsR0KuhYWUB6WAqFYoOw/edit?usp=sharing&ouid=102776207854592510887&rtpof=true&sd=true)
 
-[Игра](https://charleston-runner-07.ya-praktikum.tech)
-
 ## Стек
 
 - React.js
@@ -59,7 +57,15 @@
 
 ![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_19-50-20.png)
 
+- Топ 10 лидеров
+
+![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_27-51-26.png)
+
+
 - Страница 404
+
+![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_27-51-27.png)
+
 
 ### Установка
 
