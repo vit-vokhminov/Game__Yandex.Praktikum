@@ -29,9 +29,12 @@
 ## Страницы
 
 - Аторизация
-- Регистрация
 
 ![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_19-47-03.png)
+
+- Регистрация
+
+![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_19-47-04.png)
 
 - Главная страница
 
@@ -48,7 +51,6 @@
 
 ![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_19-49-24.png)
 
-- Страница лидеров
 - Профиль 
 
 ![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_19-51-26.png)
