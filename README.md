@@ -69,7 +69,7 @@
 ![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_27-51-27.png)
 
 
-### Установка
+## Установка
 
 В файле `.env` указаны доступы к базе данных. В базе данных PostgreSQL (например pgAdmin), нужно создать базу данных в соответствии с данными из файла `.env`.
 
