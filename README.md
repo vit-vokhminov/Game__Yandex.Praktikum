@@ -66,7 +66,7 @@
 
 - Страница 404
 
-![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_27-51-27.png)
+![Image alt](https://github.com/vit-vokhminov/Game__Yandex.Praktikum/blob/master/public/README_IMG/2021-11-14_27-58-27.png)
 
 
 ## Установка
