@@ -6,7 +6,8 @@ import { useAppDispatch } from "redux/store";
 import { login } from "redux/reducers/user/userActions";
 import { Button, ButtonSpinner } from 'components/UI/Button';
 import { Input } from 'components/UI/Input';
-import { Main, ServerMessage } from 'components';
+import { Main } from 'components';
+import ServerMessage from "components/UI/ServerMessage";
 import s from './signin.module.css';
 
 function SignIn() {

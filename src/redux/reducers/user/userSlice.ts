@@ -33,34 +33,36 @@ export const userSlice = createSlice({
             state.gameRunner = action.payload;
         }
     },
-    extraReducers: {
-        [login.fulfilled.type]: (state, action: PayloadAction<any>) => {
-            localStorage.setItem('token', action.payload.accessToken);
-            state.user = action.payload.user;
-            state.userAuth = true;
-            state.isLoading = false;
-        },
-        [login.pending.type]: (state) => {
-            state.isLoading = true;
-        },
-        [login.rejected.type]: (state, action: PayloadAction<any>) => {
-            state.isLoading = false;
-            state.serverMessage = action.payload?.message;
-            localStorage.removeItem('token');
-        },
-        [logout.fulfilled.type]: (state, action: PayloadAction<any>) => {
-            localStorage.removeItem('token');
-            state.user = null;
-            state.userAuth = false;
-        },
-        [logout.pending.type]: (state) => {
-            state.isLoading = true;
-        },
-        [logout.rejected.type]: (state, action: PayloadAction<any>) => {
-            state.isLoading = false;
-            state.serverMessage = action.payload?.message;
-        }
+    extraReducers: (builder) => {
+        builder
+            .addCase(login.fulfilled, (state, action) => {
+                localStorage.setItem('token', action.payload.accessToken);
+                state.user = action.payload.user;
+                state.userAuth = true;
+                state.isLoading = false;
+            })
+            .addCase(login.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(login.rejected, (state, action: any) => {
+                state.isLoading = false;
+                state.serverMessage = action.payload?.message;
+                localStorage.removeItem('token');
+            })
+            .addCase(logout.fulfilled, (state) => {
+                localStorage.removeItem('token');
+                state.user = null;
+                state.userAuth = false;
+            })
+            .addCase(logout.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(logout.rejected, (state, action: any) => {
+                state.isLoading = false;
+                state.serverMessage = action.payload?.message;
+            });
     }
 });
 
+export const { setServerMessage, setGameStart } = userSlice.actions;
 export default userSlice.reducer;

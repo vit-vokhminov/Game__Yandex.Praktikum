@@ -4,7 +4,7 @@ import { TypeLogin, TypeRegistration, IAuthResponse } from 'types/ApiAuthTypes';
 const instanceAPI = axios.create({
     baseURL: `${process.env.API_URL}/api/`,
     // что бы куки цеплялись автоматически
-    withCredentials: true,
+    withCredentials: true
 });
 
 // в каждый запрос устанавливается Authorization с токеном
@@ -23,16 +23,12 @@ instanceAPI.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         // смотрим статус код, если 401 то делаем запрос на refresh токена
-        if (
-            error.response.status === 401 &&
-            error.config &&
-            !error.config._isRetry
-        ) {
+        if (error.response.status === 401 && error.config && !error.config._isRetry) {
             // что избежать бесконечного цикла
             originalRequest._isRetry = true;
             try {
                 const response = await axios.get(`/refresh`, {
-                    withCredentials: true,
+                    withCredentials: true
                 });
                 localStorage.setItem('token', response.data.accessToken);
                 // originalRequest хранит все данные для запроса
@@ -66,6 +62,16 @@ export const API_AUTH = {
     async checkAuth() {
         return await instanceAPI.get<IAuthResponse>('/refresh');
     },
+
+    // изменить email или логин пользователя
+    async editUser(value: any) {
+        return await instanceAPI.put<any>('/edit-user', value);
+    },
+
+    // изменить пароль пользователя
+    async editUserPassword(value: any) {
+        return await instanceAPI.put<any>('/edit-password', value);
+    }
 };
 
 export default instanceAPI;

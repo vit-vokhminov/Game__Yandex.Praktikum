@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import CN from 'classnames';
-import { ANGELS, LEVELS, checkHero, checkLevel } from 'components/game/media/js/parameters';
+import { GAME, ANGELS, LEVELS, checkHero, checkLevel } from 'components/game/media/js/parameters';
 import { Button } from 'components/UI/Button';
 import s from './startOptions.module.css';
 
@@ -9,8 +9,9 @@ type Props = {
 };
 
 function StartOptions({ handleStartGame }: Props): ReactElement {
-    const [heroKey, setHeroKey] = useState(Object.keys(ANGELS)[0]);
-    const [levelKey, setLevelKey] = useState(Object.keys(LEVELS)[0]);
+
+    const [heroKey, setHeroKey] = useState(GAME.heroName);
+    const [levelKey, setLevelKey] = useState(GAME.level);
 
     const selectHero = (e: any) => {
         setHeroKey(e.target.getAttribute('data-name'));

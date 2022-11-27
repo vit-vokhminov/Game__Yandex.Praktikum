@@ -9,4 +9,3 @@ export { default as PasswordForm } from "./profile/password-form";
 export { default as ProfileForm } from "./profile/profile-form";
 export { default as StartOptions } from "./start-options";
 export { default as PrivateRoute } from "./PrivateRoute";
-export { default as ServerMessage } from "./ServerMessage";

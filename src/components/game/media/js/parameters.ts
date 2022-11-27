@@ -125,7 +125,7 @@ const clientWidth = window.innerWidth;
 
 const spriteHeight = 150;
 // соотношение разрешения дисплея текущего устройства
-export const pixelDevice: number = (window.devicePixelRatio > 1) ? 2 : 1;
+export const pixelDevice: number = window.devicePixelRatio;
 
 // стартовая скорость игры
 const startSpeed: number = 8 / pixelDevice;
@@ -138,10 +138,10 @@ export const GAME: Game = {
     winHeight: clientHeight,
     // координа на которой расположены персонажы
     y_positionLine: clientHeight - 220 - spriteHeight,
-    // наименование Героя
-    heroName: 'hero1',
-    // наименование уровня
-    level: 'level1',
+    // наименование Героя, просто указываю первый ключ в объекте
+    heroName: Object.keys(ANGELS)[0],
+    // наименование уровня, просто указываю первый ключ в объекте
+    level: Object.keys(LEVELS)[0],
     // сколько всего картинок
     allCount: 42,
     // сколько загрузилось
@@ -438,7 +438,7 @@ export const AUDIO = {
     ostMusic: loadAudio(() => selectAudioLevel(), 0.1),
 };
 
-export function checkHero(hero: string): void {
+export function checkHero(hero: string = ANGELS.hero1.name): void {
     GAME.heroName = hero;
     switch (hero) {
         case 'hero1':
@@ -459,7 +459,7 @@ export function checkHero(hero: string): void {
     }
 }
 
-export function checkLevel(level: string): void {
+export function checkLevel(level: string= LEVELS.level1.name): void {
     GAME.level = level;
 }
 

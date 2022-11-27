@@ -6,11 +6,12 @@ import { Button, ButtonSpinner } from 'components/UI/Button';
 import { Input } from 'components/UI/Input';
 import { useAppDispatch } from "redux/store";
 import { registration } from "redux/reducers/user/userActions";
-import { Main, ServerMessage } from 'components';
+import { Main } from 'components';
+import ServerMessage from "components/UI/ServerMessage";
 import s from './signup.module.css';
 
 function SignUp() {
-    const [shipment, setShipment] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -31,14 +32,14 @@ function SignUp() {
                 .required('Пароли не совпадают')
         }),
         onSubmit: async (values) => {
-            setShipment(true);
+            setLoading(true);
             try{
                 const user = await dispatch(registration({ values }));
                 if (user) {
                     navigate('/');
                 }
             }catch(e){
-                setShipment(false);
+                setLoading(false);
             }
         }
     });
@@ -77,7 +78,7 @@ function SignUp() {
                         <div className={s.form__redirect}>
                             <Link to='/signin'>Войти</Link>
                         </div>
-                        {shipment ? (
+                        {loading ? (
                             <ButtonSpinner />
                         ) : (
                             <Button
