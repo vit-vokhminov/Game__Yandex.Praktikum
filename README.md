@@ -6,8 +6,6 @@
 
 Игра на canvas api. Сама игра это бесконечный раннер по аналогии с T-Rex Chrome. Реализована возможность менять персонажа, и выбирать уровень в игре. В игре присутствует музыкальное и звуковое сопровождение.
 
-[Презентация](https://docs.google.com/presentation/d/1wku55QD2bHyMIsR0KuhYWUB6WAqFYoOw/edit?usp=sharing&ouid=102776207854592510887&rtpof=true&sd=true)
-
 ## Стек
 
 - React.js
