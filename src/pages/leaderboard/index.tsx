@@ -1,17 +1,17 @@
 import React from 'react';
-import { API } from 'api';
 import Main from 'components/main';
 import HeaderMenu from 'components/header-menu';
 import { ANGELS } from 'components/game/media/js/parameters';
 import './leaderboard.css';
+import * as API from 'api/routerLeaders';
+import { typeLeader } from 'types/leaderBoards';
 
 const LeaderboardPage = () => {
-
-    const [leaders, setLeaders] = React.useState(null);
+    const [leaders, setLeaders] = React.useState<typeLeader[]>([]);
 
     React.useEffect(() => {
-        API.getLeaders().then(response => {
-            const sortLeaders = response.data.sort(function (a, b) {
+        API.getLeaders().then((response) => {
+            const sortLeaders = response.data.sort(function (a: typeLeader, b: typeLeader) {
                 return b.record - a.record;
             });
             setLeaders(sortLeaders);
@@ -27,13 +27,10 @@ const LeaderboardPage = () => {
                         ? leaders.map((elem, i) => (
                               <div
                                   className='table_leaderboard_item'
-                                  key={elem.id}
-                              >
-                                  <div className='item_number'>
-                                      {i+1}
-                                  </div>
+                                  key={elem.id}>
+                                  <div className='item_number'>{i + 1}</div>
                                   <img
-                                      src={ANGELS[elem.avatar]?.avatar || ""}
+                                      src={ANGELS[elem.avatar]?.avatar || ''}
                                       alt='avatar'
                                       className='item_avatar'
                                   />
@@ -49,4 +46,4 @@ const LeaderboardPage = () => {
     );
 };
 
-export default React.memo(LeaderboardPage);
+export default LeaderboardPage;

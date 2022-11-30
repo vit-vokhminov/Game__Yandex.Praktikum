@@ -77,7 +77,7 @@
 npm i
 ```
 
-### Запуск (development)
+### Запуск
 
 ```
 npm run dev

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useFormik, FormikProvider, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { API } from 'api';
+import * as API from 'api/routerForum';
 import{ Main, HeaderMenu } from 'components';
 import s from './forum.module.css';
 

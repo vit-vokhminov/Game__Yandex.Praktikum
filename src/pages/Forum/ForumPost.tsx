@@ -1,6 +1,6 @@
 import React from 'react';
 import { Topic, Comment, CommentAdd } from './index';
-import { API } from 'api';
+import * as API from 'api/routerForum';
 import { useParams } from 'react-router-dom';
 import Main from 'components/main';
 import HeaderMenu from 'components/header-menu';

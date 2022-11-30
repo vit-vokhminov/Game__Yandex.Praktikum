@@ -1,11 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import { TypeLogin, TypeRegistration, IAuthResponse } from 'types/ApiAuthTypes';
-
-const instanceAPI = axios.create({
-    baseURL: `${process.env.API_URL}/api/`,
-    // что бы куки цеплялись автоматически
-    withCredentials: true
-});
+import axios from 'axios';
+import { instanceAPI } from './instances';
 
 // в каждый запрос устанавливается Authorization с токеном
 instanceAPI.interceptors.request.use((config: any) => {
@@ -41,37 +35,3 @@ instanceAPI.interceptors.response.use(
         throw error;
     }
 );
-
-export const API_AUTH = {
-    // Авторизация
-    async login(values: TypeLogin): Promise<AxiosResponse<IAuthResponse>> {
-        return await instanceAPI.post<IAuthResponse>('/login', values);
-    },
-
-    // Регистрация
-    async registration(values: TypeRegistration): Promise<AxiosResponse<IAuthResponse>> {
-        return await instanceAPI.post<IAuthResponse>('/registration', values);
-    },
-
-    // Выйти из аккаунта
-    async logout() {
-        return await instanceAPI.post('/logout');
-    },
-
-    // проверка авторизации пользователя при загрузке сайта
-    async checkAuth() {
-        return await instanceAPI.get<IAuthResponse>('/refresh');
-    },
-
-    // изменить email или логин пользователя
-    async editUser(value: any) {
-        return await instanceAPI.put<any>('/edit-user', value);
-    },
-
-    // изменить пароль пользователя
-    async editUserPassword(value: any) {
-        return await instanceAPI.put<any>('/edit-password', value);
-    }
-};
-
-export default instanceAPI;

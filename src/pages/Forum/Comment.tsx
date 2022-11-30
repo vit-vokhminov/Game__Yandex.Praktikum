@@ -1,12 +1,12 @@
-import React from "react";
-import { API } from "api";
-import CommentAdd from "./CommentAdd";
-import { useParams } from "react-router-dom";
-import { PropsCommentType, MessageType } from "./type";
+import React from 'react';
+import * as API from 'api/routerForum';
+import CommentAdd from './CommentAdd';
+import { useParams } from 'react-router-dom';
+import { PropsCommentType, MessageType } from './type';
 import s from './forum.module.css';
 
 interface UseParamsTypes {
-    id: string;
+    id: Id;
 }
 
 function Comment(props: PropsCommentType) {
@@ -46,15 +46,9 @@ function Comment(props: PropsCommentType) {
                 <div className={s.message_main}>
                     <div className={s.info}>
                         <span>
-                            <b>{message.author || ""}</b>
+                            <b>{message.author || ''}</b>
                         </span>
-                        <span>
-                            {message.createdAt
-                                ? new Date(
-                                      message.createdAt
-                                  ).toLocaleDateString()
-                                : "Без даты"}
-                        </span>
+                        <span>{message.createdAt ? new Date(message.createdAt).toLocaleDateString() : 'Без даты'}</span>
                     </div>
                     <p>{message.text}</p>
                 </div>
@@ -62,21 +56,19 @@ function Comment(props: PropsCommentType) {
                     <div className={s.answer_main}>
                         {!!answers.length &&
                             answers.map((elem, i) => (
-                                <Comment key={i} message={elem} />
+                                <Comment
+                                    key={i}
+                                    message={elem}
+                                />
                             ))}
                     </div>
                 </div>
                 <div
                     className={s.message_answer}
-                    onClick={() => setViewForn(!viewForn)}
-                >
-                    {viewForn ? "Скрыть" : "Ответить"}
+                    onClick={() => setViewForn(!viewForn)}>
+                    {viewForn ? 'Скрыть' : 'Ответить'}
                 </div>
-                {viewForn && (
-                    <CommentAdd
-                        handleAddMessages={handleAddMessagesToMessages}
-                    />
-                )}
+                {viewForn && <CommentAdd handleAddMessages={handleAddMessagesToMessages} />}
             </div>
         </>
     );

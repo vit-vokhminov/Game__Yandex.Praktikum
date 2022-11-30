@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ForwardBtn from 'components/UI/ForwardBtn';
+import CN from 'classnames';
 import s from './main.module.css';
 
 type MainProps = {
@@ -23,7 +24,7 @@ const Main = ({ children, title, offBtnIcon = false, ...props }: MainProps) => (
                         </Link>
                     </div>
                 ) : null}
-                <div className={`${s.header_title} ${s.title_page}`}>{title}</div>
+                <div className={CN(s.header_title, s.title_page)}>{title}</div>
             </div>
 
             {children}

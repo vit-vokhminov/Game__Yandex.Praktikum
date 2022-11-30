@@ -1,5 +1,5 @@
 import React from 'react';
-import { API } from 'api';
+import * as API from 'api/routerForum';
 import { Main, HeaderMenu } from 'components';
 import { Link } from 'react-router-dom';
 import { PostType } from './type';

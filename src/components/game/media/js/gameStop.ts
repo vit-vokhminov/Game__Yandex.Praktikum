@@ -1,5 +1,5 @@
 import { GAME, LEVELS, HERO, AUDIO } from './parameters';
-import { API } from 'api';
+import * as API from 'api/routerLeaders';
 
 export default function gameStop(): void {
     GAME.speed = 0;
