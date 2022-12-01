@@ -1,15 +1,3 @@
-export type TypeLogin = {
-    email: string,
-    password: string,
-};
-
-export type TypeRegistration = {
-    confirm: string,
-    email: string,
-    login: string,
-    password: string,
-};
-
 export interface Iuser {
     id: number;
     email: string;
@@ -20,7 +8,7 @@ export interface Iuser {
     isActivated: boolean;
 }
 
-export interface IAuthResponse {
+export interface IactionUser {
     accessToken: string;
     refreshToken: string;
     user: Iuser;

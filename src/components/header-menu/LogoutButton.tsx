@@ -15,7 +15,6 @@ const LogoutButton = () => {
             const user = dispatch(logout());
             
             navigate("/signin");
-            console.log(user);
         }
     };
 

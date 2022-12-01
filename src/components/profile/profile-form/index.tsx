@@ -2,9 +2,8 @@ import React from 'react';
 import { useFormik, FormikProvider, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Button, ButtonSpinner } from 'components/UI/Button';
-import ServerMessage from 'components/UI/ServerMessage';
+import { ErrorText } from 'components/UI/ErrorText';
 import { useAppDispatch, useAppSelector } from 'redux/store';
-import { setServerMessage } from 'redux/reducers/user/userSlice';
 import { editUser } from 'redux/reducers/user/userActions';
 import { Input } from 'components/UI/Input';
 import CN from 'classnames';
@@ -29,19 +28,15 @@ const ProfileForm = () => {
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
-            email: Yup.string().required('Поле не может быть пустым'),
-            login: Yup.string().required('Поле не может быть пустым')
+            email: Yup.string().email('Не Email').required('Поле не может быть пустым'),
+            login: Yup.string().min(3, 'Не менее 3 символов').max(12, 'Не более 12 символов').required('Поле не может быть пустым')
         }),
         onSubmit: async (values) => {
-            const result = await dispatch(editUser({ values }));
+            const result = await dispatch(editUser(values));
 
             if (result.meta.requestStatus === 'fulfilled') {
-                dispatch(setServerMessage("Ваши данные, успешно изменены"));
                 setEdit(!edit);
-            } else {
-                dispatch(setServerMessage(result.payload));
             }
-
         }
     });
 
@@ -86,6 +81,10 @@ const ProfileForm = () => {
                     disabled={!edit}
                     as={Input}
                 />
+                <ErrorText>
+                    <ErrorMessage name='email' />
+                </ErrorText>
+
                 <Field
                     name='login'
                     type='text'
@@ -94,8 +93,9 @@ const ProfileForm = () => {
                     disabled={!edit}
                     as={Input}
                 />
-
-                <ServerMessage />
+                <ErrorText>
+                    <ErrorMessage name='login' />
+                </ErrorText>
 
                 {edit ? (
                     formButton()

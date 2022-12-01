@@ -28,7 +28,7 @@ function ForumPost() {
                     setMessages([...messages, response.data]);
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.error(error);
                 });
         },
         [id, messages]

@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 import { RefObject } from 'react';
+import { Iuser } from 'redux/reducers/user/userTypes';
 
 export type Game = {
     ctx: CanvasRenderingContext2D | null;
-    user: any;
+    user: Iuser | null;
     winWidth: number;
     winHeight: number;
     y_positionLine: number;

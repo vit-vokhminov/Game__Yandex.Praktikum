@@ -26,7 +26,6 @@ class UserController {
             });
             return res.json(userData);
         } catch (e) {
-            console.log(e)
             next(e);
         }
     }
@@ -107,16 +106,13 @@ class UserController {
 
     async editUserPassword(req, res, next) {
         try {
-            const { login, password } = req.body;
-            const userData = await userService.editRegistration(
-                login,
+            const { id, password } = req.body;
+
+            const userData = await userService.editPassword(
+                id,
                 password
             );
-            // создаём куку с refreshToken и указываем срок годности, httpOnly это запрет на изменение значение через js браузера
-            res.cookie('refreshToken', userData.refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-            });
+
             return res.json(userData);
         } catch (e) {
             next(e);

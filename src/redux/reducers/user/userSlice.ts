@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, logout } from './userActions';
+import { login, logout, editUser, editUserPassword } from './userActions';
+import { IactionUser, Iuser } from './userTypes';
 
-export type TypeUser = {
-    email: string;
-    login: string;
-    isActivated: boolean;
-};
 export type TypeState = {
-    user: TypeUser | null;
+    user: Iuser | null;
     userAuth: boolean;
     isLoading: boolean;
+    loadingEditUser: boolean;
+    loadingEditPassword: boolean;
     serverMessage: string;
     gameRunner: boolean;
 };
@@ -18,6 +16,8 @@ const initialState: TypeState = {
     user: null,
     userAuth: false,
     isLoading: true,
+    loadingEditUser: false,
+    loadingEditPassword: false,
     serverMessage: '',
     gameRunner: false
 };
@@ -35,7 +35,8 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(login.fulfilled, (state, action) => {
+            // авторизация - регистрация
+            .addCase(login.fulfilled, (state, action: PayloadAction<IactionUser>) => {
                 localStorage.setItem('token', action.payload.accessToken);
                 state.user = action.payload.user;
                 state.userAuth = true;
@@ -49,6 +50,7 @@ export const userSlice = createSlice({
                 state.serverMessage = action.payload?.message;
                 localStorage.removeItem('token');
             })
+            // логоут
             .addCase(logout.fulfilled, (state) => {
                 localStorage.removeItem('token');
                 state.user = null;
@@ -59,6 +61,34 @@ export const userSlice = createSlice({
             })
             .addCase(logout.rejected, (state, action: any) => {
                 state.isLoading = false;
+                state.serverMessage = action.payload?.message;
+            })
+            // изменение данных пользователя
+            .addCase(editUser.fulfilled, (state, action: PayloadAction<Iuser>) => {
+                if(state.user){
+                    state.user.login = action.payload.login;
+                    state.user.email = action.payload.email;
+                }
+                state.loadingEditUser = false;
+                state.serverMessage = "Ваши данные, успешно изменены";
+            })
+            .addCase(editUser.pending, (state) => {
+                state.loadingEditUser = true;
+            })
+            .addCase(editUser.rejected, (state, action: any) => {
+                state.loadingEditUser = false;
+                state.serverMessage = action.payload?.message;
+            })
+            // смена пароля
+            .addCase(editUserPassword.fulfilled, (state, action: PayloadAction<IactionUser>) => {
+                state.loadingEditPassword = false;
+                state.serverMessage = "Ваш пароль, успешно изменен";
+            })
+            .addCase(editUserPassword.pending, (state) => {
+                state.loadingEditPassword = true;
+            })
+            .addCase(editUserPassword.rejected, (state, action: any) => {
+                state.loadingEditPassword = false;
                 state.serverMessage = action.payload?.message;
             });
     }

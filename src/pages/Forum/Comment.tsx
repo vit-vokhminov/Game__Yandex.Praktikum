@@ -24,7 +24,7 @@ function Comment(props: PropsCommentType) {
                     setViewForn(!viewForn);
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 });
         },
         [id, message, answers, viewForn]
@@ -36,7 +36,7 @@ function Comment(props: PropsCommentType) {
                 setAnswers(response.data);
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
             });
     }, [id, message]);
 

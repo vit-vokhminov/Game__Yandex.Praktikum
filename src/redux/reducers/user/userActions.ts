@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as API from 'api/routerUser';
 
-type TPropsLogin = {
-    username: string;
+type ThunkLoginProps = {
+    email: string;
     password: string;
 };
 
@@ -26,17 +26,24 @@ export const checkAuth = createAsyncThunk('user/login', async () => {
     return response.data;
 });
 
-export const editUser = createAsyncThunk('user/login11', async ({ values }: any, thunkApi) => {
-
+export const editUser = createAsyncThunk('user/editUser', async (values: any, thunkApi) => {
     const { dispatch, rejectWithValue } = thunkApi;
 
     try {
-        const response: any = await API.editUser(values);
-        console.log(response)
+        const response: any = await API.editUser(values);   // type response.data = Iuser
         return response.data;
     } catch (e) {
         return rejectWithValue(e.response?.data?.message);
     }
+});
 
+export const editUserPassword = createAsyncThunk('user/editUserPassword', async (values: any, thunkApi) => {
+    const { dispatch, rejectWithValue } = thunkApi;
     
+    try {
+        const response: any = await API.editUserPassword(values);
+        return response.data;
+    } catch (e) {
+        return rejectWithValue(e.response?.data?.message);
+    }
 });

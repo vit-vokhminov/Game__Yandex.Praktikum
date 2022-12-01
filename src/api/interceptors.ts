@@ -28,7 +28,7 @@ instanceAPI.interceptors.response.use(
                 // originalRequest хранит все данные для запроса
                 return instanceAPI.request(originalRequest);
             } catch (e) {
-                console.log('НЕ АВТОРИЗОВАН');
+                console.error('НЕ АВТОРИЗОВАН');
             }
         }
         // если условие не отработало, прокидываем ошибку на верхний уровень

@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useFormik, FormikProvider, Field, Form } from 'formik';
+import { useFormik, FormikProvider, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Button, ButtonSpinner } from 'components/UI/Button';
 import { Input } from 'components/UI/Input';
-import { useAppDispatch } from "redux/store";
-import { registration } from "redux/reducers/user/userActions";
+import { ErrorText } from 'components/UI/ErrorText';
+import { useAppDispatch } from 'redux/store';
+import { registration } from 'redux/reducers/user/userActions';
 import { Main } from 'components';
-import ServerMessage from "components/UI/ServerMessage";
+import ServerMessage from 'components/UI/ServerMessage';
 import s from './signup.module.css';
 
 function SignUp() {
@@ -25,20 +26,20 @@ function SignUp() {
         enableReinitialize: true,
         validationSchema: Yup.object({
             email: Yup.string().email('Укажите почту').required('Укажите почту'),
-            login: Yup.string().min(3, 'Не менее 3 символов').max(20, 'Не более 20 символов').required('Укажите логин'),
-            password: Yup.string().min(6, 'Не менее 6 символов').required('Не менее 6 символов'),
+            login: Yup.string().min(3, 'Не менее 3 символов').max(12, 'Не более 12 символов').required('Укажите логин'),
+            password: Yup.string().min(3, 'Не менее 3 символов').max(8, 'Не более 8 символов').required('Не менее 6 символов'),
             confirm: Yup.string()
                 .oneOf([Yup.ref('password'), null], 'Пароли не совпадают')
                 .required('Пароли не совпадают')
         }),
         onSubmit: async (values) => {
             setLoading(true);
-            try{
+            try {
                 const user = await dispatch(registration({ values }));
                 if (user) {
                     navigate('/');
                 }
-            }catch(e){
+            } catch (e) {
                 setLoading(false);
             }
         }
@@ -57,24 +58,40 @@ function SignUp() {
                             placeholder='Почта'
                             as={Input}
                         />
+                        <ErrorText>
+                            <ErrorMessage name='email' />
+                        </ErrorText>
+
                         <Field
                             name='login'
                             type='text'
                             placeholder='Имя в игре'
                             as={Input}
                         />
+                        <ErrorText>
+                            <ErrorMessage name='login' />
+                        </ErrorText>
+
                         <Field
                             name='password'
                             type='password'
                             placeholder='Пароль'
                             as={Input}
                         />
+                        <ErrorText>
+                            <ErrorMessage name='password' />
+                        </ErrorText>
+
                         <Field
                             name='confirm'
                             type='password'
                             placeholder='Пароль (ещё раз)'
                             as={Input}
                         />
+                        <ErrorText>
+                            <ErrorMessage name='confirm' />
+                        </ErrorText>
+
                         <div className={s.form__redirect}>
                             <Link to='/signin'>Войти</Link>
                         </div>
@@ -83,18 +100,19 @@ function SignUp() {
                         ) : (
                             <Button
                                 type='submit'
-                                disabled={!(formik.isValid)}>
+                                disabled={!formik.isValid}>
                                 Регистрация
                             </Button>
                         )}
+                        
+                        <ServerMessage />
+
                         <p className={s.description_user}>
-                            Регистрация нужна только для рейтинга и доступа к форуму. Ваши данные не нужно подтверждать. Можете их
-                            просто придумать.
+                            Регистрация нужна только для рейтинга и доступа к форуму. Ваши данные не нужно подтверждать. Можете их просто
+                            придумать.
                         </p>
                     </Form>
                 </FormikProvider>
-
-                <ServerMessage />
             </div>
         </Main>
     );

@@ -1,12 +1,28 @@
 .profile_main {
-    display: grid;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+
+    /* display: grid;
     grid-template-columns: 1fr 2fr;
-    padding: 0px 20px; 
+    padding: 0px 20px;   */
+}
+
+.avatar {
+    width: 206px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: stretch;
 }
 
 .form {
+    flex: 1 1 auto;
+    align-self: auto;
     padding: 15px;
 }
-
-
-

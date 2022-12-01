@@ -51,30 +51,25 @@ class UserService {
         */
     }
 
-    async editRegistration(login, password) {
-        const user = await UserModel.findOne({ where: { login: login } })
-        // проверка на существование такого email
-        if (user) {
+    async editPassword(id, password) {
+        const user = await UserModel.findOne({ where: { id: id } })
+        // проверка на существование такого user
+        if (!user) {
             throw ApiError.BadRequest(`Что-то пошло не так, попробуйте изменить пароль позже.`)
         }
         
         // хешируем пароль
         const hashPassword = await bcrypt.hash(password, 12);
-        // ссылка для активации
-        const activationLink = uuid.v4(); // v34fa-asfasf-142saf-sa-asf
-        // сохраняем пользователя в БД
-        const updateUser = await UserModel.update({ login, password: hashPassword, activationLink }, { where: { login: login } })
+
+        // изменяем пароль пользователя в БД
+        const updateUser = await UserModel.update({ password: hashPassword }, { where: { id: id } })
         if (!updateUser) {
             throw ApiError.BadRequest('Не удалось обновить ваши данные.');
         }
-        // UserDto нужен чтобы викинуть из модели ненужные поля
-        const userDto = new UserDto(updateUser); // останется id, email, isActivated
-        // генерируем токены access и refresh
-        const tokens = tokenService.generateTokens({...userDto});
-        // сохраняем refresh токен в БД
-        await tokenService.saveToken(userDto.login, tokens.refreshToken);
 
-        return {...tokens, user: userDto}
+        const userDto = new UserDto(updateUser);
+
+        return {user: userDto}
     }
 
     async activate(activationLink) {
