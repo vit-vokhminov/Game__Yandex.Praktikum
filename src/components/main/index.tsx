@@ -18,11 +18,11 @@ const Main = ({ children, title, offBtnIcon = false, ...props }: MainProps) => (
             {...props}>
             <div className={s.header}>
                 {offBtnIcon === false ? (
-                    <div className={s.btn_back}>
-                        <Link to='/'>
-                            <ForwardBtn />
-                        </Link>
-                    </div>
+                    <Link
+                        to='/'
+                        className={s.btn_back_link}>
+                        <ForwardBtn />
+                    </Link>
                 ) : null}
                 <div className={CN(s.header_title, s.title_page)}>{title}</div>
             </div>

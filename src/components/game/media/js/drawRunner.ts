@@ -68,19 +68,12 @@ export default function drawRunner(): void {
                 const key = i === 0 ? PUSSY.enemy.length - 1 : i - 1;
                 // нужно взять кординату х ушедшего i за левый экран
                 // и установть рандомно от последнего не ушедшего за левый экран
-                PUSSY.enemy[i].x = PUSSY.enemy[key].x + GAME.random([600, 1250]);
+                PUSSY.enemy[i].x = PUSSY.enemy[key].x + GAME.random([640, 1100]);
                 // поменяем рандомно скин
                 PUSSY.enemy[i].offset = PUSSY.skin[GAME.random([0, 2])];
             }
         }
     } else {
-        // for (let i = 0; i < PUSSY.enemy.length; i += 1) {
-        //     if (PUSSY.enemy[i].attack) {
-        //         drawImage(PUSSY[level].attack, PUSSY.enemy[i].x + 20, PUSSY.enemy[i].y, PUSSY.enemy[i].offset);
-        //     } else {
-        //         drawImage(PUSSY[level].stop, PUSSY.enemy[i].x, PUSSY.enemy[i].y, PUSSY.enemy[i].offset);
-        //     }
-        // }
         PUSSY.enemy.forEach((elem: PussyEnemy) => {
             if (elem.attack) {
                 drawImage(PUSSY[level].attack, elem.x + 20, elem.y, elem.offset);
@@ -96,8 +89,8 @@ export default function drawRunner(): void {
     }
 
     // Увеличение скорости при увеличении счёта
-    if (GAME.score - GAME.scoreCounter > 50) {
-        GAME.speed += 2 / pixelDevice;
+    if (GAME.score - GAME.scoreCounter > 25) {
+        GAME.speed += 1 / pixelDevice;
         GAME.scoreCounter = GAME.score;
     }
 

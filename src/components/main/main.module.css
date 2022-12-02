@@ -17,7 +17,7 @@
 
 .content {
     padding: 0 25px 25px;
-    width: 660px;
+    min-width: 360px;
     max-width: 100%;
     min-height: 400px;
 }
@@ -26,11 +26,11 @@
     display: flex;
 }
 
-.btn_back {
-    flex: 0 0 auto;
-    cursor: pointer;
+.btn_back_link {
+    display: inline-block;
     position: absolute;
     left: 0;
+    top: 0;
 }
 
 .header_title {

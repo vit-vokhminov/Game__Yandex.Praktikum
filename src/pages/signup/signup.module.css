@@ -1,11 +1,15 @@
-.registration {
+.signup {
     width: 360px;
     margin: auto;
 }
 
 .form__redirect {
-    margin: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
     text-align: center;
+}
+
+.form__redirect a:hover{
+    color: var(--link-color);
 }
 
 .description_user {

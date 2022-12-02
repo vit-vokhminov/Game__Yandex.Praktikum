@@ -1,9 +1,10 @@
 .table_loaderboard {
     padding: 5px 0px;
+    width: 660px;
 }
 
 .table_leaderboard_item {
-    padding: 2px 20px;
+    padding: 0px 20px;
     border-bottom: 1px solid #ccc;
     display: flex;
     flex-direction: row;
@@ -24,10 +25,14 @@
 }
 
 .item_avatar {
+    padding: 0 15px;
+}
+
+.item_avatar img {
     width: 50px;
     object-fit: contain;
-    padding: 0 10px 0 20px;
 }
+
 .item_name {
     padding: 0 10px;
     flex: 1 1 auto;
@@ -37,12 +42,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .item_level {
     padding: 0 10px;
     min-width: 186px;
     flex: 1 1 auto;
     align-self: auto;
 }
+
 .item_count {
     padding: 0 10px;
     width: 50px;

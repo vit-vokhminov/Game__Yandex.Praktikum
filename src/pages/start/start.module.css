@@ -1,5 +1,6 @@
 .start {
     overflow: hidden;
+    width: 660px;
 }
 
 .start__main {
@@ -29,7 +30,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    cursor: pointer;
 }
 
 .start__menu__topic {

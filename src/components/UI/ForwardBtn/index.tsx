@@ -6,10 +6,11 @@ const ForwardBtn = ({ className, ...props }: any) => {
     const forwardClass = CN(s.btn_back_icon, className);
 
     return (
-        <ForwardIcon
+        <div
             {...props}
-            className={forwardClass}
-        />
+            className={forwardClass}>
+            <ForwardIcon />
+        </div>
     );
 };
 

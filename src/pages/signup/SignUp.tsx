@@ -47,9 +47,8 @@ function SignUp() {
 
     return (
         <Main
-            title='GAME'
-            style={{ width: '360px' }}>
-            <div className='signin'>
+            title='GAME'>
+            <div className={s.signup}>
                 <FormikProvider value={formik}>
                     <Form>
                         <Field
@@ -93,7 +92,7 @@ function SignUp() {
                         </ErrorText>
 
                         <div className={s.form__redirect}>
-                            <Link to='/signin'>Войти</Link>
+                            <Link to='/signin'>Вход</Link>
                         </div>
                         {loading ? (
                             <ButtonSpinner />

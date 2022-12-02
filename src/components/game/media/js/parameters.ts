@@ -367,7 +367,7 @@ export const HERO: Hero = {
 };
 
 // пиздюки
-const pussyDistance = [[640, 1250], [1400, 2010], [2160, 2920]];
+const pussyDistance = [[640, 1100], [1400, 2010], [2160, 2920]];
 
 export const PUSSY: any = {
     level1: {

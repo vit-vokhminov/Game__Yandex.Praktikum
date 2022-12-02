@@ -1,7 +1,16 @@
 .btn_back_icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+
     transform: rotate(180deg);
     background: #fff;
-    padding: 10px;
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
     cursor: pointer;

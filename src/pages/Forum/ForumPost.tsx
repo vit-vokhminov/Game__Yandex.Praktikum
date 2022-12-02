@@ -50,7 +50,7 @@ function ForumPost() {
     return (
         <>
             <HeaderMenu />
-            <Main title='Форум' style={{width: "700px"}}>
+            <Main title='Форум'>
                 <div className={s.forum}>
                     <div className={s.forum_content}>
                         <Topic post={post} />

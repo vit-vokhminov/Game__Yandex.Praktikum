@@ -42,7 +42,6 @@ function SignIn() {
     return (
         <Main
             title='GAME'
-            style={{ width: '360px' }}
             offBtnIcon>
             <div className={s.signin}>
                 <FormikProvider value={formik}>
@@ -76,7 +75,7 @@ function SignIn() {
                             <Button
                                 type='submit'
                                 disabled={!formik.isValid}>
-                                Вход
+                                Войти
                             </Button>
                         )}
                         

@@ -1,14 +1,24 @@
 .list__hero {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-content: stretch;
+    align-items: flex-start;
+    
     margin: 20px 0px;
 }
 
 .list__levels {
     display: flex;
-    margin: 20px 0px;
-    grid-gap: 10px;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+
+    padding: 20px 0px;
+    margin: 0 -10px;
 }
 
 .hero {
@@ -16,11 +26,13 @@
     cursor: pointer;
 }
 
-.level {
-    width: 180px;
+.level_elem {
+    width: 50%;
     padding: 10px;
-    flex: 1 0 30%;
-    min-width: 100px;
+}
+
+.level_img {
+    max-width: 100%;
     cursor: pointer;
 }
 

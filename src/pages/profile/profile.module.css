@@ -5,14 +5,12 @@
     justify-content: flex-start;
     align-content: stretch;
 
-    /* display: grid;
-    grid-template-columns: 1fr 2fr;
-    padding: 0px 20px;   */
+    padding: 10px;
 }
 
 .avatar {
     width: 206px;
-    padding: 15px;
+    padding-right: 15px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -24,5 +22,5 @@
 .form {
     flex: 1 1 auto;
     align-self: auto;
-    padding: 15px;
+    padding-left: 15px;
 }
