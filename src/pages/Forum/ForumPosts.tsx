@@ -2,11 +2,11 @@ import React from 'react';
 import * as API from 'api/routerForum';
 import { Main, HeaderMenu } from 'components';
 import { Link } from 'react-router-dom';
-import { PostType } from './type';
+import { postType } from './types';
 import s from './forum.module.css';
 
 function ForumPosts() {
-    const [posts, setPosts] = React.useState<PostType[] | null>(null);
+    const [posts, setPosts] = React.useState<postType[] | null>(null);
 
     React.useEffect(() => {
         API.getPosts().then(response => {

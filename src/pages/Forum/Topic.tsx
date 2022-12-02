@@ -1,5 +1,5 @@
-import React from "react";
-import { PropsPostType } from "./type";
+import React from 'react';
+import { PropsPostType } from './types';
 import s from './forum.module.css';
 
 function Topic({ post }: PropsPostType) {
@@ -19,9 +19,7 @@ function Topic({ post }: PropsPostType) {
                             <span>
                                 <b>{post.author}</b>
                             </span>
-                            <span>
-                                {new Date(post.createdAt).toLocaleDateString()}
-                            </span>
+                            <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                         </div>
                     </div>
                 </div>

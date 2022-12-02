@@ -4,12 +4,12 @@ import * as API from 'api/routerForum';
 import { useParams } from 'react-router-dom';
 import Main from 'components/main';
 import HeaderMenu from 'components/header-menu';
-import { PostType, MessageType } from './type';
+import { postType, MessageType } from './types';
 import s from './forum.module.css';
 
-interface UseParamsTypes {
+type UseParamsTypes = {
     id: string;
-}
+};
 
 type addMessageValueType = {
     author: string;
@@ -17,17 +17,17 @@ type addMessageValueType = {
 };
 
 function ForumPost() {
-    const [post, setPost] = React.useState<PostType | null>(null);
+    const [post, setPost] = React.useState<postType | null>(null);
     const [messages, setMessages] = React.useState<MessageType[]>([]);
     const { id } = useParams<UseParamsTypes>();
 
     const handleAddMessages = React.useCallback(
         (value: addMessageValueType) => {
             API.addMessage(id, JSON.stringify(value))
-                .then(response => {
+                .then((response) => {
                     setMessages([...messages, response.data]);
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error(error);
                 });
         },
@@ -35,13 +35,13 @@ function ForumPost() {
     );
 
     const handleGetMessages = React.useCallback(() => {
-        API.getMessages(id).then(response => {
+        API.getMessages(id).then((response) => {
             setMessages(response.data);
         });
     }, [id, setMessages]);
 
     React.useEffect(() => {
-        API.getPost(id).then(response => {
+        API.getPost(id).then((response) => {
             setPost(response.data);
             handleGetMessages();
         });
@@ -58,8 +58,11 @@ function ForumPost() {
                         {
                             <div className={s.messages}>
                                 {messages.length ? (
-                                    messages.map(elem => (
-                                        <Comment key={elem.id} message={elem} />
+                                    messages.map((elem) => (
+                                        <Comment
+                                            key={elem.id}
+                                            message={elem}
+                                        />
                                     ))
                                 ) : (
                                     <p>Комментариев нет</p>

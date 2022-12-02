@@ -1,21 +1,20 @@
 import { instanceAPI } from './instances';
-import { AddPostType, AddPostResponseType, EditPostType, AddMessageValueType } from 'types/ApiForumTypes';
-import { PostType } from 'types/ForumTypes';
+import { addPostResponseType, EditPostType, AddMessageValueType } from 'types/ApiForumTypes';
+import { valueAddPostType, postType } from 'pages/Forum/types';
 
 // Получить все посты
-export const getPosts = async (): Promise<Array<PostType>> => {
-    //!: Promise<[PostType]>
+export const getPosts = async (): Promise<Array<postType>> => {
     return await instanceAPI.get('/posts');
 };
 
 // Получить пост по id
-export const getPost = async (id: string): Promise<PostType> => {
+export const getPost = async (id: string): Promise<postType> => {
     return await instanceAPI.get(`/post/${id}`);
 };
 
 // Создать новый пост
-export const addPost = async (values: any) => {
-    return await instanceAPI.post<AddPostResponseType>('/post/', values);
+export const addPost = async (values: valueAddPostType) => {
+    return await instanceAPI.post<addPostResponseType>('/post/', values);
 };
 
 // Изменить пост по id

@@ -26,8 +26,6 @@ function ForumAddPost() {
                 .required('Не заполнен текст поста'),
         }),
         onSubmit: values => {
-            //console.log('values', JSON.stringify(values, null, 2));
-
             API.addPost(JSON.stringify(values))
                 .then(response => {
                     if (response.status === 200) {
@@ -35,7 +33,7 @@ function ForumAddPost() {
                     }
                 })
                 .catch(error => {
-                    // throw new Error('Что-то пошло не так: ', error.message);
+                    console.error(error)
                 });
         },
     });

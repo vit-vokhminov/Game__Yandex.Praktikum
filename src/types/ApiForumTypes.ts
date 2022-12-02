@@ -4,7 +4,7 @@ export type AddPostType = {
     title: string,
 };
 
-export type AddPostResponseType = {
+export type addPostResponseType = {
     id: number;
     author: string;
     title: string;
