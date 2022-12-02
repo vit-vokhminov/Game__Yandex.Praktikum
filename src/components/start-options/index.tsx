@@ -9,7 +9,6 @@ type Props = {
 };
 
 function StartOptions({ handleStartGame }: Props): ReactElement {
-
     const [heroKey, setHeroKey] = useState(GAME.heroName);
     const [levelKey, setLevelKey] = useState(GAME.level);
 
@@ -44,16 +43,17 @@ function StartOptions({ handleStartGame }: Props): ReactElement {
             </div>
             <div className={s.list__levels}>
                 {Object.entries(LEVELS).map(([key, level]: any) => (
-                   <div className={s.level_elem}>
-                     <img
-                        key={key}
-                        src={level.avatar}
-                        data-name={key}
-                        alt={key}
-                        className={CN(s.level_img, { [s.active]: levelKey === key })}
-                        onClick={selectLevel}
-                    />
-                   </div>
+                    <div
+                        className={s.level_elem}
+                        key={key}>
+                        <img
+                            src={level.avatar}
+                            data-name={key}
+                            alt={key}
+                            className={CN(s.level_img, { [s.active]: levelKey === key })}
+                            onClick={selectLevel}
+                        />
+                    </div>
                 ))}
             </div>
             <div className={s.btn__group}>

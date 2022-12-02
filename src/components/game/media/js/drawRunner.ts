@@ -62,12 +62,14 @@ export default function drawRunner(): void {
 
             // новые координаты для следующей отрисовки
             PUSSY.enemy[i].x -= GAME.speed * PUSSY.enemy[i].distance;
-
+            
             // ушедший за левый экран враг, респаунится за правым экраном
             if (PUSSY.enemy[i].x + PUSSY[level].run.width < -40) {
+                // ключ последнего пиздюка
                 const key = i === 0 ? PUSSY.enemy.length - 1 : i - 1;
                 // нужно взять кординату х ушедшего i за левый экран
                 // и установть рандомно от последнего не ушедшего за левый экран
+                
                 PUSSY.enemy[i].x = PUSSY.enemy[key].x + GAME.random([640, 1100]);
                 // поменяем рандомно скин
                 PUSSY.enemy[i].offset = PUSSY.skin[GAME.random([0, 2])];

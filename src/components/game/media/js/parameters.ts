@@ -367,7 +367,7 @@ export const HERO: Hero = {
 };
 
 // пиздюки
-const pussyDistance = [[640, 1100], [1400, 2010], [2160, 2920]];
+const pussyDistance = [[640, 1200], [1500, 2060], [2360, 2920]];    // диапазон 560
 
 export const PUSSY: any = {
     level1: {
@@ -393,21 +393,21 @@ export const PUSSY: any = {
     skin: [0, 200, 400],
     enemy: [
         {
-            x: 1280 + GAME.random(pussyDistance[0]),
+            x: (GAME.winWidth - 600) + GAME.random(pussyDistance[0]),
             y: GAME.y_positionLine,
             offset: 0,
             distance: 1.5,
             attack: false,
         },
         {
-            x: 1280 + GAME.random(pussyDistance[1]),
+            x: (GAME.winWidth - 600) + GAME.random(pussyDistance[1]),
             y: GAME.y_positionLine,
             offset: 200,
             distance: 1.5,
             attack: false,
         },
         {
-            x: 1280 + GAME.random(pussyDistance[2]),
+            x: (GAME.winWidth - 600) + GAME.random(pussyDistance[2]),
             y: GAME.y_positionLine,
             offset: 400,
             distance: 1.5,
